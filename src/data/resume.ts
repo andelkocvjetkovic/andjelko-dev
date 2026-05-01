@@ -76,7 +76,7 @@ export const resume = {
   contact: {
     email: 'andjelko.cvjetkovic@gmail.com',
     github: 'https://github.com/andelkocvjetkovic',
-    linkedin: 'https://www.linkedin.com/in/andelkocvjekovic/',
+    linkedin: 'https://www.linkedin.com/in/andjelkocvjekovic/',
     website: 'https://andjelko.dev',
     location: 'Bosnia & Herzegovina',
   },
