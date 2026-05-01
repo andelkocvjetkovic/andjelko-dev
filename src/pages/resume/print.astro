@@ -1,0 +1,569 @@
+---
+import { Icon } from 'astro-icon/components';
+import Base from '../../layouts/Base.astro';
+import { resume } from '../../data/resume';
+
+const skillGroups = [
+  resume.skills.primary,
+  ...resume.skills.alsoShipping.slice(0, 1),
+  resume.skills.frontendEngineering,
+  resume.skills.uiSystems,
+  resume.skills.dataMaps,
+  resume.skills.testing,
+  resume.skills.cms,
+  ...resume.skills.other,
+  ...resume.skills.alsoShipping.slice(1),
+  resume.skills.aiWorkflow,
+];
+
+const achievementHtml = [
+  "Rendered 32,000+ map locations smoothly through viewport virtualization on <strong>Kam třídit</strong> (Czechia's nationwide recycling app), shipped across web, iOS, and Android.",
+  'Achieved Lighthouse 97 on desktop (FCP 0.3s, LCP 1.1s, CLS 0) on <strong>BH-Passport</strong> by rebuilding a legacy WordPress site as a Next.js + Sanity application.',
+  "Built a multi-product platform for Eko-kom (Czechia's national packaging recovery organization) — two consumer apps sharing a monorepo, design system, and CMS infrastructure.",
+  'Shipped <strong>ScrumGlide</strong> end-to-end as solo frontend — multi-role ticketing, sprint planning, real-time socket sync, and analytics including burndown charts and epic timelines.',
+] as const;
+---
+
+<Base title={`${resume.name} — Resume Print`}>
+  <main class="container" aria-label={`${resume.name} print resume`}>
+    <header class="resume-header">
+      <div class="header-left">
+        <h1 class="resume-name">{resume.name}</h1>
+        <p class="resume-title">{resume.title} · {resume.contact.location} (Remote)</p>
+      </div>
+      <div class="header-right">
+        <div class="avatar-placeholder" aria-label="Headshot">
+          <img src="/headshot.jpg" alt="" />
+        </div>
+      </div>
+    </header>
+
+    <div class="contact-row">
+      <div class="contact-item">
+        <Icon name="lucide:mail" class="contact-icon" aria-hidden="true" />
+        <a href={`mailto:${resume.contact.email}`} class="contact-email">{resume.contact.email}</a>
+      </div>
+      <div class="contact-item">
+        <Icon name="lucide:github" class="contact-icon" aria-hidden="true" />
+        <a href={resume.contact.github} target="_blank" rel="noopener">github.com/andelkocvjetkovic</a>
+      </div>
+      <div class="contact-item">
+        <Icon name="lucide:linkedin" class="contact-icon" aria-hidden="true" />
+        <a href={resume.contact.linkedin} target="_blank" rel="noopener">linkedin.com/in/andjelkocvjetkovic</a>
+      </div>
+    </div>
+
+    <section class="section">
+      <p class="section-heading">Summary</p>
+      <p class="summary-text">{resume.summary}</p>
+    </section>
+
+    <section class="section">
+      <p class="section-heading">Selected Achievements</p>
+      <ul class="achievement-list">
+        {achievementHtml.map((achievement) => <li class="achievement-item"><span set:html={achievement} /></li>)}
+      </ul>
+    </section>
+
+    <section class="section">
+      <p class="section-heading">Core Skills</p>
+      <div class="skills-table">
+        {
+          skillGroups.map((group) => (
+            <div class="skill-row">
+              <span class="skill-label">{group.label}</span>
+              <span class="skill-values">{group.items.join(' · ')}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-heading">Experience</p>
+      {
+        resume.experience.map((entry) => (
+          <div class="exp-entry">
+            <div class="exp-header">
+              <p class="exp-company">{entry.company} — {entry.role}</p>
+              <p class="exp-meta">{entry.dates} · {entry.location}</p>
+            </div>
+            <p class="exp-intro">{entry.description}</p>
+            <ul class="bullet-list">
+              {entry.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="section">
+      <p class="section-heading">Selected Projects</p>
+      {
+        resume.projects.map((project) => {
+          const links = project.links ?? (project.link ? [project.link] : []);
+          const hasSubSections = 'subSections' in project.sections;
+
+          return (
+            <div class="project-entry">
+              <div class="project-header-line">
+                <span class="project-name">{project.name}</span>
+                {links.map((link, index) => (
+                  <>
+                    <span class="project-link-sep">{index === 0 ? '—' : '·'}</span>
+                    <a href={link.href} class="project-link" target="_blank" rel="noopener">
+                      {link.label}
+                    </a>
+                  </>
+                ))}
+              </div>
+              <p class="project-subtitle">{project.subtitle}</p>
+              {project.intro && <p class="project-intro">{project.intro}</p>}
+
+              {hasSubSections ? (
+                <>
+                  {project.sections.subSections.map((section) => (
+                    <div class="sub-section">
+                      <p class="sub-section-label">{section.title}</p>
+                      <ul class="bullet-list">
+                        {section.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
+                      </ul>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <ul class="bullet-list">
+                  {project.sections.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
+                </ul>
+              )}
+
+              <p class="project-stack">Stack: {project.stack.join(', ')}</p>
+            </div>
+          );
+        })
+      }
+    </section>
+
+    <section class="section">
+      <p class="section-heading">Education</p>
+      {resume.education.map((entry) => (
+        <>
+          <p class="edu-degree">{entry.degree}</p>
+          <p class="edu-institution">{entry.school}</p>
+          <p class="edu-dates">{entry.dates} ({entry.status})</p>
+        </>
+      ))}
+    </section>
+  </main>
+
+  <script is:inline>
+    if (new URLSearchParams(window.location.search).has('print')) {
+      document.fonts.ready.then(() => setTimeout(() => window.print(), 500));
+    }
+  </script>
+</Base>
+
+<style>
+  :global(:root) {
+    --bg: #ffffff;
+    --section-gap: 28px;
+  }
+
+  :global(html) {
+    background: var(--bg);
+    color: var(--fg);
+    font-size: 13px;
+    line-height: 1.55;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  :global(body) {
+    background: #fff;
+    padding: 40px 24px 56px;
+  }
+
+  .container {
+    max-width: var(--content-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .resume-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+
+  .resume-name {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--fg);
+    margin-bottom: 6px;
+  }
+
+  .resume-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-muted);
+    letter-spacing: 0.03em;
+  }
+
+  .avatar-placeholder {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .avatar-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 28%;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--section-gap);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--fg);
+    padding: 0 14px 0 0;
+  }
+
+  .contact-item:not(:last-child)::after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 11px;
+    background: var(--border);
+    margin-left: 14px;
+    vertical-align: middle;
+  }
+
+  .contact-icon {
+    width: 12px;
+    height: 12px;
+    color: var(--fg-muted);
+    flex-shrink: 0;
+  }
+
+  .contact-email {
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .section {
+    margin-bottom: var(--section-gap);
+  }
+
+  .section-heading {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+    break-after: avoid;
+  }
+
+  .summary-text {
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--fg);
+    max-width: 640px;
+  }
+
+  .achievement-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .achievement-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--fg);
+    break-inside: avoid;
+  }
+
+  .achievement-item::before {
+    content: '';
+    display: block;
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 6px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .achievement-item span {
+    display: block;
+  }
+
+  .achievement-item strong {
+    font-weight: 600;
+  }
+
+  .skills-table {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    break-inside: avoid;
+  }
+
+  .skill-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-top: 1px;
+  }
+
+  .skill-values {
+    font-size: 12.5px;
+    color: var(--fg);
+    line-height: 1.45;
+  }
+
+  .exp-entry {
+    break-inside: avoid;
+  }
+
+  .exp-header {
+    margin-bottom: 6px;
+  }
+
+  .exp-company {
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    margin-bottom: 2px;
+  }
+
+  .exp-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .exp-intro {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--fg);
+    margin-bottom: 10px;
+    max-width: 640px;
+  }
+
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .bullet-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+
+  .bullet-item::before {
+    content: '–';
+    color: var(--fg-muted);
+    flex-shrink: 0;
+  }
+
+  .project-entry {
+    margin-bottom: 22px;
+  }
+
+  .project-entry:last-child {
+    margin-bottom: 0;
+  }
+
+  .project-header-line {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 2px;
+    break-after: avoid;
+  }
+
+  .project-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .project-link {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--gold);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .project-link-sep {
+    color: var(--fg-muted);
+    font-size: 12px;
+  }
+
+  .project-subtitle {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-style: italic;
+    color: var(--fg-muted);
+    margin-bottom: 8px;
+  }
+
+  .project-intro {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--fg);
+    margin-bottom: 10px;
+    max-width: 640px;
+  }
+
+  .project-stack {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-muted);
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .sub-section {
+    margin-top: 12px;
+    break-inside: avoid;
+  }
+
+  .sub-section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 6px;
+  }
+
+  .edu-degree {
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    margin-bottom: 3px;
+  }
+
+  .edu-institution {
+    font-size: 12.5px;
+    color: var(--fg);
+    margin-bottom: 3px;
+    line-height: 1.45;
+  }
+
+  .edu-dates {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-muted);
+  }
+
+  @media print {
+    @page {
+      size: A4;
+      margin: 18mm;
+    }
+
+    :global(html),
+    :global(body) {
+      background: #fff !important;
+      padding: 0;
+      font-size: 12px;
+    }
+
+    :global(body) {
+      padding: 0;
+    }
+
+    .section,
+    .achievement-item,
+    .skill-row,
+    .exp-entry,
+    .sub-section {
+      break-inside: avoid;
+    }
+
+    .project-header-line,
+    .project-subtitle,
+    .section-heading {
+      break-after: avoid;
+    }
+
+    .achievement-item::before,
+    .project-link {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+
+  @media screen {
+    :global(body) {
+      background: #d0d0d0;
+      padding: 40px 24px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 18mm;
+      max-width: 210mm;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    }
+  }
+</style>
