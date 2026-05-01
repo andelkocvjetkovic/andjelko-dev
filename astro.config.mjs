@@ -8,4 +8,7 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   integrations: [tailwind(), mdx()],
   adapter: vercel(),
+  devToolbar: {
+    enabled: false,
+  },
 });

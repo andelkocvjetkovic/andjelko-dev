@@ -1,0 +1,53 @@
+---
+import MetricCell from './MetricCell.astro';
+
+const metrics = [
+  { value: '97', label: 'Lighthouse desktop\nBH-Passport' },
+  { value: '32k+', label: 'Map locations\nKam třídit' },
+  { value: '3', label: 'Platforms shipped\nWeb / iOS / Android' },
+  { value: '5', label: 'Years building\nproduction web apps' },
+] as const;
+---
+
+<section id="metrics">
+  <p class="section-label">Selected metrics</p>
+  <div class="metrics-grid">
+    {metrics.map((metric) => <MetricCell value={metric.value} label={metric.label} />)}
+  </div>
+</section>
+
+<style>
+  #metrics {
+    margin-bottom: calc(var(--section-gap) * 1.6);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,6 +1,7 @@
 # build output
 dist/
 .vercel/
+.playwright-cli/
 # generated types
 .astro/
 

@@ -1,0 +1,70 @@
+---
+interface Props {
+  value: string;
+  label: string;
+}
+
+const { value, label } = Astro.props;
+const labelParts = label.split('\n');
+---
+
+<div class="metric">
+  <div class="metric-number">{value}</div>
+  <div class="metric-label">
+    {labelParts.map((part, index) => <>{index > 0 && <br />}{part}</>)}
+  </div>
+</div>
+
+<style>
+  .metric {
+    padding: 32px 0;
+    padding-right: 24px;
+  }
+
+  .metric:not(:last-child) {
+    border-right: 1px solid var(--border);
+    margin-right: 24px;
+  }
+
+  .metric-number {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .metric-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .metric:nth-child(2) {
+      border-right: none;
+      margin-right: 0;
+    }
+
+    .metric:nth-child(1),
+    .metric:nth-child(2) {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metric:nth-child(3),
+    .metric:nth-child(4) {
+      border-right: none;
+      margin-right: 0;
+    }
+
+    .metric:nth-child(3) {
+      border-right: 1px solid var(--border);
+      margin-right: 24px;
+    }
+  }
+</style>

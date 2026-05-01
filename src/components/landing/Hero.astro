@@ -1,0 +1,49 @@
+---
+import { landing } from '../../data/landing';
+import { resume } from '../../data/resume';
+---
+
+<section class="hero">
+  <h1 class="hero-name">{resume.name}</h1>
+  <p class="hero-tagline">{landing.hero.tagline}</p>
+  <p class="hero-meta">Bosnia &amp; Herzegovina &nbsp;&middot;&nbsp; Open to remote roles</p>
+</section>
+
+<style>
+  .hero {
+    padding-top: 40px;
+    margin-bottom: var(--section-gap);
+  }
+
+  .hero-name {
+    font-size: clamp(36px, 6.5vw, 58px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--fg);
+    margin-bottom: 28px;
+    white-space: nowrap;
+  }
+
+  .hero-tagline {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--fg);
+    line-height: 1.5;
+    max-width: 560px;
+    margin-bottom: 20px;
+  }
+
+  .hero-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-muted);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 640px) {
+    .hero-name {
+      white-space: normal;
+    }
+  }
+</style>

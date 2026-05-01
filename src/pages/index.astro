@@ -1,7 +1,29 @@
 ---
 import Base from '../layouts/Base.astro';
+import About from '../components/landing/About.astro';
+import Contact from '../components/landing/Contact.astro';
+import Footer from '../components/landing/Footer.astro';
+import Hero from '../components/landing/Hero.astro';
+import SelectedMetrics from '../components/landing/SelectedMetrics.astro';
+import SelectedWork from '../components/landing/SelectedWork.astro';
 ---
 
 <Base>
-  <main class="mx-auto w-full max-w-content" aria-label="Andjelko Cvjetkovic portfolio"></main>
+  <main class="container" aria-label="Andjelko Cvjetkovic portfolio">
+    <Hero />
+    <SelectedWork />
+    <SelectedMetrics />
+    <About />
+    <Contact />
+    <Footer />
+  </main>
 </Base>
+
+<style>
+  .container {
+    width: 100%;
+    max-width: var(--content-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

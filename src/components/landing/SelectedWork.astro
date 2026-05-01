@@ -1,0 +1,49 @@
+---
+import { resume } from '../../data/resume';
+import ProjectRow from './ProjectRow.astro';
+
+const stackLabels: Record<string, readonly string[]> = {
+  'eko-kom': ['React', 'TypeScript', 'MapLibre', 'Tailwind'],
+  'bh-passport': ['Next.js', 'Sanity', 'TypeScript'],
+  scrumglide: ['React', 'TanStack Router', 'Visx'],
+  tabletap: ['Svelte', 'Astro', 'TypeScript'],
+};
+---
+
+<section id="work">
+  <p class="section-label">Selected work</p>
+  <ul class="work-list">
+    {
+      resume.projects.map((project) => (
+        <ProjectRow
+          name={project.name}
+          description={project.subtitle}
+          stack={stackLabels[project.slug] ?? project.stack}
+          href={`/projects/${project.slug}`}
+        />
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  #work {
+    margin-bottom: calc(var(--section-gap) * 1.6);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .work-list {
+    list-style: none;
+    margin-top: 32px;
+  }
+</style>
