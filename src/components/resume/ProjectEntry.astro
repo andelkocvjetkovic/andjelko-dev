@@ -1,0 +1,160 @@
+---
+import type { ProjectEntry as ProjectEntryType } from '../../data/resume';
+
+interface Props {
+  project: ProjectEntryType;
+}
+
+const { project } = Astro.props;
+const hasSubSections = 'subSections' in project.sections;
+---
+
+<article class="project">
+  <div class="project-head">
+    <div>
+      <h3>{project.name}</h3>
+      <p class="subtitle">{project.subtitle}</p>
+    </div>
+    {project.link && <a href={project.link.href} class="project-link">{project.link.label}</a>}
+  </div>
+
+  <div class="stack">
+    {project.stack.map((item) => <span>{item}</span>)}
+  </div>
+
+  {
+    hasSubSections ? (
+      <div class="subsections">
+        {project.sections.subSections.map((section) => (
+          <section class="subsection">
+            <div class="subsection-head">
+              <h4>{section.title}</h4>
+              {section.link && <a href={section.link.href}>{section.link.label}</a>}
+            </div>
+            <ul>
+              {section.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+            {section.stack && (
+              <div class="stack compact">
+                {section.stack.map((item) => <span>{item}</span>)}
+              </div>
+            )}
+          </section>
+        ))}
+      </div>
+    ) : (
+      <ul>
+        {project.sections.bullets.map((bullet) => <li>{bullet}</li>)}
+      </ul>
+    )
+  }
+</article>
+
+<style>
+  .project {
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+    break-inside: avoid;
+  }
+
+  .project:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-head,
+  .subsection-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  h4 {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--fg);
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--fg-muted);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .project-link,
+  .subsection-head a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-muted);
+    white-space: nowrap;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+  }
+
+  .stack span {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  .stack.compact {
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  ul {
+    padding-left: 18px;
+  }
+
+  li {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+
+  li::marker {
+    color: var(--gold);
+  }
+
+  .subsections {
+    display: grid;
+    gap: 14px;
+    margin-top: 12px;
+  }
+
+  .subsection {
+    break-inside: avoid;
+  }
+
+  .subsection ul {
+    margin-top: 6px;
+  }
+
+  @media (max-width: 640px) {
+    .project-head,
+    .subsection-head {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+import type { EducationEntry as EducationEntryType } from '../../data/resume';
+
+interface Props {
+  entry: EducationEntryType;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="education">
+  <div>
+    <h3>{entry.degree}</h3>
+    <p>{entry.school}</p>
+  </div>
+  <p class="dates">{entry.dates} ({entry.status})</p>
+</article>
+
+<style>
+  .education {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    break-inside: avoid;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--fg);
+  }
+
+  p {
+    font-size: 12px;
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+
+  .dates {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .education {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

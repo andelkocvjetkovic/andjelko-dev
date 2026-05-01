@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section class="resume-section">
+  <h2 class="section-label">{title}</h2>
+  <slot />
+</section>
+
+<style>
+  .resume-section {
+    margin-bottom: var(--section-gap);
+    break-inside: avoid;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+</style>

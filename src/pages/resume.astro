@@ -1,0 +1,220 @@
+---
+import Base from '../layouts/Base.astro';
+import EducationEntry from '../components/resume/EducationEntry.astro';
+import ExperienceEntry from '../components/resume/ExperienceEntry.astro';
+import ProjectEntry from '../components/resume/ProjectEntry.astro';
+import ResumeHeader from '../components/resume/ResumeHeader.astro';
+import Section from '../components/resume/Section.astro';
+import { resume } from '../data/resume';
+
+const skillGroups = [
+  resume.skills.primary,
+  resume.skills.frontendEngineering,
+  resume.skills.uiSystems,
+  resume.skills.dataMaps,
+  resume.skills.testing,
+  resume.skills.cms,
+  resume.skills.aiWorkflow,
+  ...resume.skills.alsoShipping,
+  ...resume.skills.other,
+];
+---
+
+<Base title={`${resume.name} — Resume`}>
+  <main class="resume-page" aria-label={`${resume.name} resume`}>
+    <a href="/resume.pdf" class="download-link">Download PDF</a>
+
+    <ResumeHeader name={resume.name} title={resume.title} contact={resume.contact} />
+
+    <Section title="Summary">
+      <p class="body-copy">{resume.summary}</p>
+      <p class="focus-line">
+        <span>Current Focus:</span> {resume.currentFocus.join(' · ')}
+      </p>
+    </Section>
+
+    <Section title="Selected Achievements">
+      <ul class="simple-list">
+        {resume.achievements.map((achievement) => <li>{achievement}</li>)}
+      </ul>
+    </Section>
+
+    <Section title="Core Skills">
+      <div class="skills-grid">
+        {
+          skillGroups.map((group) => (
+            <div class="skill-group">
+              <h3>{group.label}</h3>
+              <p>{group.items.join(', ')}</p>
+            </div>
+          ))
+        }
+      </div>
+    </Section>
+
+    <Section title="Experience">
+      {resume.experience.map((entry) => <ExperienceEntry entry={entry} />)}
+    </Section>
+
+    <Section title="Selected Projects">
+      <div class="projects-list">
+        {resume.projects.map((project) => <ProjectEntry project={project} />)}
+      </div>
+    </Section>
+
+    <Section title="Education">
+      {resume.education.map((entry) => <EducationEntry entry={entry} />)}
+    </Section>
+  </main>
+</Base>
+
+<style>
+  :global(html) {
+    background: #fff;
+    font-size: 14px;
+  }
+
+  :global(body) {
+    background: #fff;
+    padding: 48px;
+  }
+
+  .resume-page {
+    position: relative;
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .download-link {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    border: 1px solid var(--border);
+    padding: 0 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    background: #fff;
+  }
+
+  .body-copy {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--fg);
+    max-width: 620px;
+  }
+
+  .focus-line {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .focus-line span {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .simple-list {
+    padding-left: 18px;
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+  }
+
+  .simple-list li {
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--fg);
+    margin-bottom: 5px;
+  }
+
+  .simple-list li::marker {
+    color: var(--gold);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 24px;
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+  }
+
+  .skill-group {
+    break-inside: avoid;
+  }
+
+  .skill-group h3 {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+
+  .skill-group p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+  }
+
+  .projects-list {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 640px) {
+    :global(body) {
+      padding: 36px 20px 48px;
+    }
+
+    .download-link {
+      position: static;
+      margin-bottom: 32px;
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 1.2cm 1.5cm;
+    }
+
+    :global(html),
+    :global(body) {
+      background: #fff !important;
+      padding: 0;
+    }
+
+    .download-link {
+      display: none;
+    }
+
+    a {
+      color: inherit !important;
+    }
+
+    :global(section),
+    .skill-group {
+      break-inside: avoid;
+    }
+
+    :global(.stack span),
+    :global(.headshot-wrap) {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+</style>

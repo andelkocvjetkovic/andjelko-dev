@@ -1,0 +1,139 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Contact } from '../../data/resume';
+
+interface Props {
+  name: string;
+  title: string;
+  contact: Contact;
+}
+
+const { name, title, contact } = Astro.props;
+const [firstName, lastName] = name.split(' ');
+---
+
+<header class="resume-hero">
+  <div class="hero-copy">
+    <h1 class="hero-name">{firstName}<br />{lastName}</h1>
+    <p class="hero-tagline">{title}, building production web apps where performance and complexity matter.</p>
+    <div class="contact-list" aria-label="Contact information">
+      <a href={`mailto:${contact.email}`} class="contact-link">
+        <Icon name="lucide:mail" aria-hidden="true" />
+        <span>{contact.email}</span>
+      </a>
+      <a href={contact.github} class="contact-link">
+        <Icon name="lucide:github" aria-hidden="true" />
+        <span>GitHub</span>
+      </a>
+      <a href={contact.linkedin} class="contact-link">
+        <Icon name="lucide:linkedin" aria-hidden="true" />
+        <span>LinkedIn</span>
+      </a>
+      <span class="contact-link">
+        <Icon name="lucide:map-pin" aria-hidden="true" />
+        <span>{contact.location}</span>
+      </span>
+    </div>
+  </div>
+  <div class="headshot-wrap" aria-hidden="true">
+    <img src="/headshot.jpg" alt="" class="headshot" />
+  </div>
+</header>
+
+<style>
+  .resume-hero {
+    display: grid;
+    grid-template-columns: 1fr 88px;
+    gap: 28px;
+    align-items: start;
+    padding-top: 16px;
+    margin-bottom: var(--section-gap);
+    break-inside: avoid;
+  }
+
+  .hero-name {
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--fg);
+    margin-bottom: 20px;
+  }
+
+  .hero-tagline {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--fg);
+    line-height: 1.5;
+    max-width: 520px;
+    margin-bottom: 16px;
+  }
+
+  .contact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    max-width: 540px;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .contact-link :global(svg) {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 auto;
+    stroke-width: 1.75;
+  }
+
+  .headshot-wrap {
+    width: 88px;
+    height: 88px;
+    overflow: hidden;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .headshot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 28%;
+  }
+
+  @media (max-width: 640px) {
+    .resume-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .headshot-wrap {
+      grid-row: 1;
+      width: 80px;
+      height: 80px;
+    }
+
+    .hero-name {
+      font-size: clamp(42px, 14vw, 56px);
+    }
+  }
+
+  @media print {
+    .resume-hero {
+      grid-template-columns: 1fr 80px;
+      gap: 24px;
+    }
+
+    .headshot-wrap {
+      width: 80px;
+      height: 80px;
+    }
+  }
+</style>
