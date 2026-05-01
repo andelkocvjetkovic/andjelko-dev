@@ -1,6 +1,6 @@
 export const landing = {
   hero: {
-    tagline: 'Senior Frontend Engineer, building production web apps where performance and complexity matter.',
+    tagline: 'Frontend Engineer, building production web apps where performance and complexity matter.',
   },
   about: [
     "I take full ownership from architecture to deployment — on most projects, I've been the sole frontend engineer. My focus is on production-grade web apps where performance isn't an afterthought: measurable Lighthouse scores, tight render budgets, design systems built to scale.",
