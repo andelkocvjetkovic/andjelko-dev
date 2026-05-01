@@ -1,25 +1,44 @@
 ---
-import { resume } from '../../data/resume';
 import ProjectRow from './ProjectRow.astro';
 
-const stackLabels: Record<string, readonly string[]> = {
-  'eko-kom': ['React', 'TypeScript', 'MapLibre', 'Tailwind'],
-  'bh-passport': ['Next.js', 'Sanity', 'TypeScript'],
-  scrumglide: ['React', 'TanStack Router', 'Visx'],
-  tabletap: ['Svelte', 'Astro', 'TypeScript'],
-};
+const projects = [
+  {
+    name: 'Kam třídit',
+    description: "Czechia's nationwide recycling locator · Web, iOS, Android",
+    stack: ['REACT', 'TYPESCRIPT', 'MAPLIBRE', 'TAILWIND'],
+    href: 'https://kamtridit.cz',
+  },
+  {
+    name: 'Čistou přírodou',
+    description: 'Public nature-trails platform · Czechia',
+    stack: ['REACT', 'TYPESCRIPT', 'MAPLIBRE', 'TAILWIND'],
+    href: 'https://prirodou.samosebou.cz',
+  },
+  {
+    name: 'BH-Passport',
+    description: 'Travel agency platform · Bosnian market',
+    stack: ['NEXT.JS', 'SANITY', 'TYPESCRIPT'],
+    href: 'https://bhpassport.ba',
+  },
+  {
+    name: 'TableTap',
+    description: 'Codepool in-house product · QR-based ordering for restaurants',
+    stack: ['SVELTE', 'ASTRO', 'TYPESCRIPT'],
+    href: 'https://www.table-tap.app/',
+  },
+] as const;
 ---
 
 <section id="work">
   <p class="section-label">Selected work</p>
   <ul class="work-list">
     {
-      resume.projects.map((project) => (
+      projects.map((project) => (
         <ProjectRow
           name={project.name}
-          description={project.subtitle}
-          stack={stackLabels[project.slug] ?? project.stack}
-          href={`/projects/${project.slug}`}
+          description={project.description}
+          stack={project.stack}
+          href={project.href}
         />
       ))
     }

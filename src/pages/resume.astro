@@ -8,6 +8,8 @@ import ResumeHeader from '../components/resume/ResumeHeader.astro';
 import Section from '../components/resume/Section.astro';
 import { resume } from '../data/resume';
 
+const isPrintMode = Astro.url.searchParams.get('print') === '1';
+
 const skillGroups = [
   resume.skills.primary,
   ...resume.skills.alsoShipping.slice(0, 1),
@@ -21,20 +23,14 @@ const skillGroups = [
   resume.skills.aiWorkflow,
 ];
 
-const achievementHtml = [
-  "Rendered 32,000+ map locations smoothly through viewport virtualization on <strong>Kam třídit</strong> (Czechia's nationwide recycling app), shipped across web, iOS, and Android.",
-  'Achieved Lighthouse 97 on desktop (FCP 0.3s, LCP 1.1s, CLS 0) on <strong>BH-Passport</strong> by rebuilding a legacy WordPress site as a Next.js + Sanity application.',
-  "Built a multi-product platform for Eko-kom (Czechia's national packaging recovery organization) — two consumer apps sharing a monorepo, design system, and CMS infrastructure.",
-  'Shipped <strong>ScrumGlide</strong> end-to-end as solo frontend — multi-role ticketing, sprint planning, real-time socket sync, and analytics including burndown charts and epic timelines.',
-] as const;
 ---
 
-<Base title={`${resume.name} — Resume`}>
+<Base title={`${resume.name} — Resume`} bodyClass={isPrintMode ? 'resume-print' : undefined}>
   <main class="container" aria-label={`${resume.name} resume`}>
     <ResumeHeader name={resume.name} title={resume.title} location={resume.contact.location} />
 
     <div class="contact-bar">
-      <a href="/resume/print?print=1" class="pdf-btn" aria-label="Download PDF">
+      <a href="/andjelko.cvjetkovic-resume.pdf" class="pdf-btn" aria-label="Download PDF">
         <svg
           width="11"
           height="11"
@@ -73,7 +69,7 @@ const achievementHtml = [
 
     <Section title="Selected Achievements">
       <ul class="achievement-list">
-        {achievementHtml.map((achievement) => <li class="achievement-item"><span set:html={achievement} /></li>)}
+        {resume.achievements.map((achievement) => <li class="achievement-item"><span>{achievement}</span></li>)}
       </ul>
     </Section>
 
@@ -144,8 +140,8 @@ const achievementHtml = [
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--gold);
+    color: var(--accent);
+    border: 1px solid var(--accent);
     padding: 6px 14px;
     border-radius: 2px;
     cursor: pointer;
@@ -158,8 +154,8 @@ const achievementHtml = [
   }
 
   .pdf-btn:hover {
-    background: var(--gold);
-    color: var(--fg);
+    background: var(--accent);
+    color: var(--bg);
     text-decoration: none;
   }
 
@@ -220,6 +216,8 @@ const achievementHtml = [
     font-size: 13.5px;
     line-height: 1.65;
     color: var(--fg);
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .achievement-item::before {
@@ -227,7 +225,7 @@ const achievementHtml = [
     display: block;
     width: 8px;
     height: 8px;
-    background: var(--gold);
+    background: var(--accent);
     flex-shrink: 0;
     margin-top: 7px;
   }
@@ -283,17 +281,62 @@ const achievementHtml = [
     letter-spacing: 0.06em;
   }
 
-  @media print {
-    @page {
-      size: A4 portrait;
-      margin: 1.4cm 1.6cm;
-    }
+  :global(body.resume-print) {
+    --bg: #fff;
+    --section-gap: 36px;
+    background: #fff;
+    padding: 0;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 
+  :global(body.resume-print) .contact-bar {
+    display: none;
+  }
+
+  :global(body.resume-print) .container {
+    max-width: none;
+  }
+
+  :global(body.resume-print .resume-name),
+  :global(body.resume-print p),
+  :global(body.resume-print li),
+  :global(body.resume-print li span),
+  :global(body.resume-print .summary-text),
+  :global(body.resume-print .achievement-item),
+  :global(body.resume-print .skill-values),
+  :global(body.resume-print .exp-company),
+  :global(body.resume-print .exp-intro),
+  :global(body.resume-print .bullet-item),
+  :global(body.resume-print .project-name),
+  :global(body.resume-print .project-intro),
+  :global(body.resume-print .project-stack),
+  :global(body.resume-print .edu-degree),
+  :global(body.resume-print .edu-institution) {
+    letter-spacing: normal;
+  }
+
+  :global(body.resume-print) :global(.project-entry),
+  :global(body.resume-print) :global(.entry),
+  :global(body.resume-print) .achievement-item,
+  :global(body.resume-print) .contact-row {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  :global(body.resume-print) :global(.section-heading) {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  @media print {
     :global(html),
     :global(body) {
       background: #fff !important;
       padding: 0;
       font-size: 13px;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
     }
 
     :global(:root) {
@@ -301,16 +344,40 @@ const achievementHtml = [
       --bg: #fff;
     }
 
+    :global(.resume-name),
+    :global(p),
+    :global(li),
+    :global(li span),
+    .summary-text,
+    .achievement-item,
+    .skill-values,
+    :global(.exp-company),
+    :global(.exp-intro),
+    :global(.bullet-item),
+    :global(.project-name),
+    :global(.project-intro),
+    :global(.project-stack),
+    :global(.edu-degree),
+    :global(.edu-institution) {
+      letter-spacing: normal;
+    }
+
     .pdf-btn,
     .contact-bar {
       display: none !important;
     }
 
-    :global(.section),
     :global(.project-entry),
     :global(.entry),
+    .achievement-item,
     .contact-row {
       break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    :global(.section-heading) {
+      break-after: avoid;
+      page-break-after: avoid;
     }
 
     .achievement-item::before,

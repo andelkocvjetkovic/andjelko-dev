@@ -6,45 +6,28 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const links = project.links ?? (project.link ? [project.link] : []);
-const hasSubSections = 'subSections' in project.sections;
 ---
 
 <article class="project-entry">
   <div class="project-header-line">
     <span class="project-name">{project.name}</span>
-    {
-      links.map((link, index) => (
-        <>
-          <span class="project-link-sep">{index === 0 ? '—' : '·'}</span>
-          <a href={link.href} class="project-link" target="_blank" rel="noopener">
-            {link.label}
-          </a>
-        </>
-      ))
-    }
+    {project.link && (
+      <>
+        {' '}
+        <span class="project-link-sep">—</span>
+        {' '}
+        <a href={project.link.href} class="project-link" target="_blank" rel="noopener">
+          {project.link.label}
+        </a>
+      </>
+    )}
   </div>
   <p class="project-subtitle">{project.subtitle}</p>
   {project.intro && <p class="project-intro">{project.intro}</p>}
 
-  {
-    hasSubSections ? (
-      <>
-        {project.sections.subSections.map((section) => (
-          <div class="sub-section">
-            <p class="sub-section-label">{section.title}</p>
-            <ul class="bullet-list">
-              {section.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
-            </ul>
-          </div>
-        ))}
-      </>
-    ) : (
-      <ul class="bullet-list">
-        {project.sections.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
-      </ul>
-    )
-  }
+  <ul class="bullet-list">
+    {project.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
+  </ul>
 
   <p class="project-stack">Stack: {project.stack.join(', ')}</p>
 </article>
@@ -53,6 +36,7 @@ const hasSubSections = 'subSections' in project.sections;
   .project-entry {
     margin-bottom: 32px;
     break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .project-entry:last-child {
@@ -77,15 +61,15 @@ const hasSubSections = 'subSections' in project.sections;
   .project-link {
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--gold);
+    color: var(--accent);
     text-decoration: underline;
-    text-decoration-color: var(--gold);
+    text-decoration-color: var(--accent);
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
   }
 
   .project-link:hover {
-    text-decoration-color: var(--gold);
+    text-decoration-color: var(--accent);
   }
 
   .project-link-sep {
@@ -139,14 +123,4 @@ const hasSubSections = 'subSections' in project.sections;
     letter-spacing: 0.02em;
   }
 
-  .sub-section {
-    margin-top: 16px;
-  }
-
-  .sub-section-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--fg);
-    margin-bottom: 8px;
-  }
 </style>

@@ -1,9 +1,10 @@
 ---
 interface Props {
   title?: string;
+  bodyClass?: string;
 }
 
-const { title = 'Andjelko Cvjetkovic — Senior Frontend Engineer' } = Astro.props;
+const { title = 'Andjelko Cvjetkovic — Senior Frontend Engineer', bodyClass } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,7 +28,7 @@ const { title = 'Andjelko Cvjetkovic — Senior Frontend Engineer' } = Astro.pro
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class={bodyClass}>
     <slot />
   </body>
 </html>
@@ -46,7 +47,7 @@ const { title = 'Andjelko Cvjetkovic — Senior Frontend Engineer' } = Astro.pro
     --fg: #0A0A0A;
     --fg-muted: #6B6B6B;
     --fg-faint: #B0B0B0;
-    --gold: #FFD700;
+    --accent: #15803D;
     --border: #E4E4E4;
 
     --font-body: 'Switzer', -apple-system, sans-serif;
@@ -79,7 +80,7 @@ const { title = 'Andjelko Cvjetkovic — Senior Frontend Engineer' } = Astro.pro
 
   a:hover {
     text-decoration: underline;
-    text-decoration-color: var(--gold);
+    text-decoration-color: var(--accent);
     text-decoration-thickness: 1.5px;
     text-underline-offset: 3px;
   }

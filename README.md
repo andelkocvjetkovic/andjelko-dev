@@ -35,8 +35,13 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm build`           | Build your production site to `./dist/`          |
 | `pnpm preview`         | Preview your build locally, before deploying     |
+| `pnpm pdf:resume`      | Generate `public/andjelko.cvjetkovic-resume.pdf` from `/resume` |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
+
+## Resume PDF
+
+Run `pnpm pdf:resume` whenever resume content changes, then commit the resulting `public/andjelko.cvjetkovic-resume.pdf`.
 
 ## 👀 Want to learn more?
 

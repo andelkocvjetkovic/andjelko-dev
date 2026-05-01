@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./src/**/*.{astro,html,js,jsx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
       colors: {
@@ -9,7 +9,7 @@ export default {
         fg: '#0A0A0A',
         'fg-muted': '#6B6B6B',
         'fg-faint': '#B0B0B0',
-        gold: '#FFD700',
+        accent: '#15803D',
         border: '#E4E4E4',
       },
       fontFamily: {
