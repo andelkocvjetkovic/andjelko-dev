@@ -69,7 +69,7 @@ export type Resume = {
 
 export const resume = {
   name: 'Andjelko\u00a0Cvjetkovic',
-  title: 'Frontend Engineer · frontend work',
+  title: 'Frontend Engineer · Senior-level frontend work',
   summary:
     'Frontend engineer with 5 years of experience building production web apps where performance, UX, and complexity matter — interactive maps with tens of thousands of points, real-time dashboards, multi-role workflows, and shared design systems. I often own frontend work end-to-end: from architecture and implementation to performance, testing, and pixel-level polish. My day-to-day stack is React, Next.js, TypeScript, and modern UI tooling, with Claude Code and Codex as part of my workflow for codebase exploration, refactors, and multi-step engineering tasks.',
   currentFocus: [],
