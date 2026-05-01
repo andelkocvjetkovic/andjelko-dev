@@ -69,9 +69,9 @@ export type Resume = {
 
 export const resume = {
   name: 'Andjelko\u00a0Cvjetkovic',
-  title: 'Senior Frontend Engineer',
+  title: 'Frontend Engineer · Senior-level frontend work',
   summary:
-    'Frontend engineer with 5 years building production web apps where performance and complexity matter — interactive maps with tens of thousands of points, real-time data dashboards, multi-role workflows, and design systems shared across products. I own work end-to-end: from architectural decisions through pixel-level polish, often as the sole frontend engineer on the project. React, Next.js, and TypeScript day-to-day, with Claude Code and Codex as part of my workflow for agentic, multi-step engineering tasks.',
+    'Frontend engineer with 5 years of experience building production web apps where performance, UX, and complexity matter — interactive maps with tens of thousands of points, real-time dashboards, multi-role workflows, and shared design systems. I often own frontend work end-to-end: from architecture and implementation to performance, testing, and pixel-level polish. My day-to-day stack is React, Next.js, TypeScript, and modern UI tooling, with Claude Code and Codex as part of my workflow for codebase exploration, refactors, and multi-step engineering tasks.',
   currentFocus: [],
   contact: {
     email: 'andjelko.cvjetkovic@gmail.com',
@@ -102,7 +102,7 @@ export const resume = {
     ],
     frontendEngineering: {
       label: 'Frontend engineering',
-      items: ['Performance optimization', 'Accessibility (WCAG)', 'SEO', 'SSR/SSG/CSR', 'Core Web Vitals'],
+      items: ['Performance optimization', 'Accessibility (WCAG)', 'SEO', 'Internationalization (i18n)', 'SSR/SSG/CSR', 'Core Web Vitals'],
     },
     uiSystems: {
       label: 'UI systems',
@@ -110,7 +110,7 @@ export const resume = {
     },
     dataMaps: {
       label: 'Data & maps',
-      items: ['D3.js', 'Visx', 'MapLibre GL JS'],
+      items: ['MapLibre GL JS', 'Mapy.com', 'Visx', 'D3.js'],
     },
     testing: {
       label: 'Testing',
@@ -209,7 +209,7 @@ export const resume = {
       },
       subtitle: 'Codepool in-house product · QR-based ordering for restaurants',
       intro:
-        'Joined an existing admin panel — vibe-coded Svelte with no consistent patterns — and turned it into a maintainable product. Now own multiple parts of the stack as solo frontend.',
+        'Joined an inherited Svelte admin panel with inconsistent patterns and turned it into a more maintainable product as the solo frontend engineer. Now own multiple parts of the stack.',
       stack: ['Svelte (admin)', 'Astro (landing)', 'TypeScript', 'Tailwind CSS'],
       bullets: [
         'Migrated the admin panel codebase to TypeScript and established the patterns (shared form components, inputs, design-system primitives) the team uses today.',
