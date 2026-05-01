@@ -11,8 +11,10 @@ const metrics = [
 
 <section id="metrics">
   <p class="section-label">Selected metrics</p>
-  <div class="metrics-grid">
-    {metrics.map((metric) => <MetricCell value={metric.value} label={metric.label} />)}
+  <div class="section-body">
+    <div class="metrics-grid">
+      {metrics.map((metric) => <MetricCell value={metric.value} label={metric.label} />)}
+    </div>
   </div>
 </section>
 
@@ -27,16 +29,20 @@ const metrics = [
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--fg-muted);
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
     margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .section-body {
+    padding-top: 32px;
   }
 
   .metrics-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
-    margin-top: 32px;
+    margin-top: 0;
   }
 
   @media (max-width: 640px) {

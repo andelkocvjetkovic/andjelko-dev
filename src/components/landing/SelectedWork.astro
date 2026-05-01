@@ -31,18 +31,20 @@ const projects = [
 
 <section id="work">
   <p class="section-label">Selected work</p>
-  <ul class="work-list">
-    {
-      projects.map((project) => (
-        <ProjectRow
-          name={project.name}
-          description={project.description}
-          stack={project.stack}
-          href={project.href}
-        />
-      ))
-    }
-  </ul>
+  <div class="section-body">
+    <ul class="work-list">
+      {
+        projects.map((project) => (
+          <ProjectRow
+            name={project.name}
+            description={project.description}
+            stack={project.stack}
+            href={project.href}
+          />
+        ))
+      }
+    </ul>
+  </div>
 </section>
 
 <style>
@@ -56,13 +58,17 @@ const projects = [
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--fg-muted);
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
     margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .section-body {
+    padding-top: 32px;
   }
 
   .work-list {
     list-style: none;
-    margin-top: 32px;
+    margin-top: 0;
   }
 </style>

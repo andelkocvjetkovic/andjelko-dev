@@ -4,7 +4,9 @@ import { landing } from '../../data/landing';
 
 <section id="about">
   <p class="section-label">About</p>
-  {landing.about.map((paragraph) => <p class="about-text">{paragraph}</p>)}
+  <div class="section-body">
+    {landing.about.map((paragraph) => <p class="about-text">{paragraph}</p>)}
+  </div>
 </section>
 
 <style>
@@ -23,19 +25,18 @@ import { landing } from '../../data/landing';
     padding-bottom: 0;
   }
 
+  .section-body {
+    display: grid;
+    gap: 16px;
+    padding-top: 32px;
+  }
+
   .about-text {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.75;
     color: var(--fg);
     max-width: 620px;
-  }
-
-  .about-text:first-of-type {
-    margin-top: 32px;
-  }
-
-  .about-text + .about-text {
-    margin-top: 16px;
+    margin: 0;
   }
 </style>
