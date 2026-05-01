@@ -6,155 +6,147 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const links = project.links ?? (project.link ? [project.link] : []);
 const hasSubSections = 'subSections' in project.sections;
 ---
 
-<article class="project">
-  <div class="project-head">
-    <div>
-      <h3>{project.name}</h3>
-      <p class="subtitle">{project.subtitle}</p>
-    </div>
-    {project.link && <a href={project.link.href} class="project-link">{project.link.label}</a>}
+<article class="project-entry">
+  <div class="project-header-line">
+    <span class="project-name">{project.name}</span>
+    {
+      links.map((link, index) => (
+        <>
+          <span class="project-link-sep">{index === 0 ? '—' : '·'}</span>
+          <a href={link.href} class="project-link" target="_blank" rel="noopener">
+            {link.label}
+          </a>
+        </>
+      ))
+    }
   </div>
-
-  <div class="stack">
-    {project.stack.map((item) => <span>{item}</span>)}
-  </div>
+  <p class="project-subtitle">{project.subtitle}</p>
+  {project.intro && <p class="project-intro">{project.intro}</p>}
 
   {
     hasSubSections ? (
-      <div class="subsections">
+      <>
         {project.sections.subSections.map((section) => (
-          <section class="subsection">
-            <div class="subsection-head">
-              <h4>{section.title}</h4>
-              {section.link && <a href={section.link.href}>{section.link.label}</a>}
-            </div>
-            <ul>
-              {section.bullets.map((bullet) => <li>{bullet}</li>)}
+          <div class="sub-section">
+            <p class="sub-section-label">{section.title}</p>
+            <ul class="bullet-list">
+              {section.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
             </ul>
-            {section.stack && (
-              <div class="stack compact">
-                {section.stack.map((item) => <span>{item}</span>)}
-              </div>
-            )}
-          </section>
+          </div>
         ))}
-      </div>
+      </>
     ) : (
-      <ul>
-        {project.sections.bullets.map((bullet) => <li>{bullet}</li>)}
+      <ul class="bullet-list">
+        {project.sections.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
       </ul>
     )
   }
+
+  <p class="project-stack">Stack: {project.stack.join(', ')}</p>
 </article>
 
 <style>
-  .project {
-    padding: 18px 0;
-    border-top: 1px solid var(--border);
+  .project-entry {
+    margin-bottom: 32px;
     break-inside: avoid;
   }
 
-  .project:last-child {
-    border-bottom: 1px solid var(--border);
+  .project-entry:last-child {
+    margin-bottom: 0;
   }
 
-  .project-head,
-  .subsection-head {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
+  .project-header-line {
+    display: flex;
     align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 3px;
   }
 
-  h3 {
-    font-size: 14px;
-    font-weight: 800;
+  .project-name {
+    font-size: 15px;
+    font-weight: 700;
     letter-spacing: -0.01em;
     color: var(--fg);
   }
 
-  h4 {
-    font-size: 12px;
-    font-weight: 800;
-    color: var(--fg);
-  }
-
-  .subtitle {
-    font-size: 12px;
-    color: var(--fg-muted);
-    line-height: 1.5;
-    margin-top: 4px;
-  }
-
-  .project-link,
-  .subsection-head a {
+  .project-link {
     font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--fg-muted);
-    white-space: nowrap;
-  }
-
-  .stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 10px 0;
-  }
-
-  .stack span {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--fg-muted);
-    border: 1px solid var(--border);
-    padding: 2px 6px;
-    border-radius: 2px;
-  }
-
-  .stack.compact {
-    margin-top: 8px;
-    margin-bottom: 0;
-  }
-
-  ul {
-    padding-left: 18px;
-  }
-
-  li {
-    font-size: 12px;
-    line-height: 1.6;
-    color: var(--fg);
-    margin-bottom: 4px;
-  }
-
-  li::marker {
+    font-size: 11px;
     color: var(--gold);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
   }
 
-  .subsections {
-    display: grid;
-    gap: 14px;
-    margin-top: 12px;
+  .project-link:hover {
+    text-decoration-color: var(--gold);
   }
 
-  .subsection {
-    break-inside: avoid;
+  .project-link-sep {
+    color: var(--fg-muted);
+    font-size: 13px;
   }
 
-  .subsection ul {
-    margin-top: 6px;
+  .project-subtitle {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-style: italic;
+    color: var(--fg-muted);
+    margin-bottom: 12px;
   }
 
-  @media (max-width: 640px) {
-    .project-head,
-    .subsection-head {
-      grid-template-columns: 1fr;
-      gap: 4px;
-    }
+  .project-intro {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--fg);
+    margin-bottom: 12px;
+    max-width: 640px;
+  }
+
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bullet-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+
+  .bullet-item::before {
+    content: '–';
+    color: var(--fg-muted);
+    flex-shrink: 0;
+  }
+
+  .project-stack {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--fg-muted);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .sub-section {
+    margin-top: 16px;
+  }
+
+  .sub-section-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 8px;
   }
 </style>

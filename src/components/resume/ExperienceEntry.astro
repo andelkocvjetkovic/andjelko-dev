@@ -9,74 +9,68 @@ const { entry } = Astro.props;
 ---
 
 <article class="entry">
-  <div class="entry-head">
-    <div>
-      <h3>{entry.company}</h3>
-      <p class="role">{entry.role}</p>
-    </div>
-    <p class="dates">{entry.dates}</p>
+  <div class="exp-header">
+    <p class="exp-company">{entry.company} — {entry.role}</p>
+    <p class="exp-meta">{entry.dates} · {entry.location}</p>
   </div>
-  {entry.description && <p class="description">{entry.description}</p>}
-  <ul>
-    {entry.bullets.map((bullet) => <li>{bullet}</li>)}
+  {entry.description && <p class="exp-intro">{entry.description}</p>}
+  <ul class="bullet-list">
+    {entry.bullets.map((bullet) => <li class="bullet-item">{bullet}</li>)}
   </ul>
 </article>
 
 <style>
   .entry {
     break-inside: avoid;
+    margin-bottom: 0;
   }
 
-  .entry-head {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-    align-items: baseline;
-    padding-top: 18px;
-    border-top: 1px solid var(--border);
-    margin-bottom: 10px;
+  .exp-header {
+    margin-bottom: 8px;
   }
 
-  h3 {
+  .exp-company {
     font-size: 15px;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.01em;
     color: var(--fg);
+    margin-bottom: 3px;
   }
 
-  .role,
-  .dates {
+  .exp-meta {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 11px;
     color: var(--fg-muted);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
   }
 
-  .description {
-    font-size: 12px;
-    color: var(--fg-muted);
-    margin-bottom: 10px;
+  .exp-intro {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--fg);
+    margin-bottom: 12px;
+    max-width: 640px;
   }
 
-  ul {
-    padding-left: 18px;
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  li {
-    font-size: 12px;
+  .bullet-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
     line-height: 1.65;
     color: var(--fg);
-    margin-bottom: 5px;
   }
 
-  li::marker {
-    color: var(--gold);
-  }
-
-  @media (max-width: 640px) {
-    .entry-head {
-      grid-template-columns: 1fr;
-      gap: 4px;
-    }
+  .bullet-item::before {
+    content: '–';
+    color: var(--fg-muted);
+    flex-shrink: 0;
   }
 </style>
