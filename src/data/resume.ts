@@ -97,7 +97,7 @@ export const resume = {
       },
       {
         label: 'Tooling',
-        items: ['Vite', 'Git'],
+        items: ['Vite', 'Git', 'pnpm', 'Turborepo', 'Monorepos'],
       },
     ],
     frontendEngineering: {
