@@ -17,13 +17,42 @@ const labelParts = label.split('\n');
 
 <style>
   .metric {
-    padding: 32px 0;
-    padding-right: 24px;
+    position: relative;
+    padding: 32px 24px;
   }
 
-  .metric:not(:last-child) {
-    border-right: 1px solid var(--border);
-    margin-right: 24px;
+  .metric:first-child {
+    padding-left: 0;
+  }
+
+  .metric:last-child {
+    padding-right: 0;
+  }
+
+  .metric::after,
+  .metric::before {
+    content: '';
+    position: absolute;
+    background: var(--border);
+  }
+
+  .metric::after {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+  }
+
+  .metric::before {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    display: none;
+  }
+
+  .metric:nth-child(4)::after {
+    display: none;
   }
 
   .metric-number {
@@ -46,25 +75,30 @@ const labelParts = label.split('\n');
   }
 
   @media (max-width: 640px) {
-    .metric:nth-child(2) {
-      border-right: none;
-      margin-right: 0;
+    .metric {
+      padding-right: 20px;
     }
 
-    .metric:nth-child(1),
-    .metric:nth-child(2) {
-      border-bottom: 1px solid var(--border);
+    .metric:nth-child(2n + 1) {
+      padding-left: 0;
+      padding-right: 20px;
     }
 
-    .metric:nth-child(3),
-    .metric:nth-child(4) {
-      border-right: none;
-      margin-right: 0;
+    .metric:nth-child(2n) {
+      padding-left: 20px;
+      padding-right: 0;
     }
 
-    .metric:nth-child(3) {
-      border-right: 1px solid var(--border);
-      margin-right: 24px;
+    .metric:nth-child(2n)::after {
+      display: none;
+    }
+
+    .metric:nth-child(-n + 2)::before {
+      display: block;
+    }
+
+    .metric:nth-child(4)::after {
+      display: none;
     }
   }
 </style>
