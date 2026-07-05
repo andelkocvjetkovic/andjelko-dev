@@ -1,10 +1,15 @@
 ---
 interface Props {
   title?: string;
+  description?: string;
   bodyClass?: string;
 }
 
-const { title = 'Andjelko Cvjetkovic — Frontend Engineer', bodyClass } = Astro.props;
+const {
+  title = 'Andjelko Cvjetkovic — Senior Frontend Engineer',
+  description = 'Senior Frontend Engineer building production web apps where performance and complexity matter.',
+  bodyClass,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -14,6 +19,12 @@ const { title = 'Andjelko Cvjetkovic — Frontend Engineer', bodyClass } = Astro
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://andjelko.dev" />
+    <meta property="og:site_name" content="Andjelko Cvjetkovic" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
 
     <link rel="preconnect" href="https://api.fontshare.com" />
     <link

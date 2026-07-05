@@ -4,9 +4,12 @@ import { resume } from '../../data/resume';
 ---
 
 <section class="hero">
-  <h1 class="hero-name">{resume.name}</h1>
+  <div class="hero-identity">
+    <img class="hero-avatar" src="/avatar.jpg" alt={resume.name} width="104" height="104" />
+    <h1 class="hero-name">{resume.name}</h1>
+  </div>
   <p class="hero-tagline">{landing.hero.tagline}</p>
-  <p class="hero-meta">Bosnia &amp; Herzegovina</p>
+  <p class="hero-meta">Remote &middot; Bosnia &amp; Herzegovina (CET)</p>
 </section>
 
 <style>
@@ -15,13 +18,28 @@ import { resume } from '../../data/resume';
     margin-bottom: var(--section-gap);
   }
 
+  .hero-identity {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .hero-avatar {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
   .hero-name {
     font-size: clamp(36px, 6.5vw, 58px);
     font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 1.05;
     color: var(--fg);
-    margin-bottom: 28px;
     white-space: nowrap;
   }
 
@@ -44,6 +62,11 @@ import { resume } from '../../data/resume';
   @media (max-width: 640px) {
     .hero-name {
       white-space: normal;
+    }
+
+    .hero-identity {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 </style>
