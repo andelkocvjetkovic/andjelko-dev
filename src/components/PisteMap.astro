@@ -1,4 +1,5 @@
 ---
+import SceneSwitch from './SceneSwitch.astro';
 import RiderSprite from './RiderSprite.astro';
 import MountainForest from './MountainForest.astro';
 import SnowSpray from './SnowSpray.astro';
@@ -7,7 +8,7 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
 ---
 
 <div class="piste-map" data-piste>
-<svg class="piste-svg" aria-hidden="true" focusable="false" viewBox="0 0 1440 900">
+<svg class="piste-svg" role="group" aria-label="Project trails" viewBox="0 0 1440 900">
       <g class="mountain-sky">
         <circle cx="1300" cy="104" r="42" fill="#F2CA70"/>
         <g fill="#FFFFFF" opacity=".6">
@@ -26,7 +27,7 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
       <polygon points="-10000,660 0,660 240,540 460,600 760,490 880,560 1000,400 1180,520 1440,440 10000,440 10000,900 -10000,900" fill="var(--mountain-front)"/>
       <polygon class="snow-cap" points="760,490 734,516 750,512 766,526 780,512 796,518" fill="#FFFFFF"/>
       <MountainForest />
-      <g class="winter-lift">
+      <g class="winter-lift" aria-hidden="true">
       <!-- lift: base station, cable, towers, cabins -->
       <path d="M1390 872 L1150 262" fill="none" stroke="#14202B" stroke-width="1.5" stroke-opacity="0.7"/>
       <g stroke="#14202B" stroke-opacity="0.7" stroke-width="2.5" stroke-linecap="round">
@@ -47,23 +48,31 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
         <path d="M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900"/>
         <path d="M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900"/>
       </g>
-      <!-- runs: drawn one by one as the rider goes down them -->
-      <path class="run-tt tour" d="M760 496 C 720 580, 800 660, 740 740 S 760 840, 720 900" pathLength="1" fill="none" stroke={colors["tabletap"]} stroke-width="4" stroke-linecap="round"/>
-      <path class="run-cb tour" d="M1040 178 C 960 240, 900 300, 920 380 S 820 540, 860 660 S 800 820, 840 900" pathLength="1" fill="none" stroke={colors["coffeebreak"]} stroke-width="4" stroke-linecap="round"/>
-      <path class="run-cp tour" d="M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900" pathLength="1" fill="none" stroke={colors["cistou-prirodou"]} stroke-width="4" stroke-linecap="round"/>
-      <path class="run-kt tour" d="M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900" pathLength="1" fill="none" stroke={colors["kamtridit"]} stroke-width="4" stroke-linecap="round"/>
-      <g class="named-signs" font-family="JetBrains Mono" font-size="12">
-        <g class="sign-tt tour"><rect x="692" y="728" width="96" height="24" rx="3" fill={colors["tabletap"]}/><text x="702" y="744" fill="#FFFFFF">04 TableTap</text></g>
-        <g class="sign-cb tour"><rect x="804" y="648" width="112" height="24" rx="3" fill={colors["coffeebreak"]}/><text x="814" y="664" fill="#FFFFFF">03 CoffeeBreak</text></g>
-        <g class="sign-cp tour"><rect x="1095" y="648" width="150" height="24" rx="3" fill={colors["cistou-prirodou"]}/><text x="1105" y="664" fill="#FFFFFF">02 Čistou přírodou</text></g>
-        <g class="sign-kt tour"><rect x="950" y="388" width="120" height="24" rx="3" fill={colors["kamtridit"]}/><text x="960" y="404" fill="#FFFFFF">01 Kamtřídit</text></g>
-      </g>
-      <g class="number-signs" font-family="JetBrains Mono" font-size="12">
-        <g class="sign-tt tour"><circle cx="740" cy="740" r="21" fill={colors["tabletap"]} stroke="#FFFFFF" stroke-width="3"/><text x="740" y="747" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">04</text></g>
-        <g class="sign-cb tour"><circle cx="860" cy="660" r="21" fill={colors["coffeebreak"]} stroke="#FFFFFF" stroke-width="3"/><text x="860" y="667" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">03</text></g>
-        <g class="sign-cp tour"><circle cx="1170" cy="660" r="21" fill={colors["cistou-prirodou"]} stroke="#FFFFFF" stroke-width="3"/><text x="1170" y="667" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">02</text></g>
-        <g class="sign-kt tour"><circle cx="1010" cy="400" r="21" fill={colors["kamtridit"]} stroke="#FFFFFF" stroke-width="3"/><text x="1010" y="407" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">01</text></g>
-      </g>
+      <!-- Each trail and its signs share a project anchor. -->
+      <a class="trail-link trail-tt tour" href="#project-tabletap" aria-label="View TableTap project" tabindex="0">
+        <path class="trail-hit run-tt tour" pathLength="1" d="M760 496 C 720 580, 800 660, 740 740 S 760 840, 720 900" fill="none" stroke="transparent" stroke-width="20"/>
+        <path class="run-tt tour" d="M760 496 C 720 580, 800 660, 740 740 S 760 840, 720 900" pathLength="1" fill="none" stroke={colors["tabletap"]} stroke-width="4" stroke-linecap="round"/>
+        <g class="named-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-tt tour"><rect x="692" y="728" width="96" height="24" rx="3" fill={colors["tabletap"]}/><text x="702" y="744" fill="#FFFFFF">04 TableTap</text></g></g>
+        <g class="number-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-tt tour"><circle cx="740" cy="740" r="21" fill={colors["tabletap"]} stroke="#FFFFFF" stroke-width="3"/><text x="740" y="747" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">04</text></g></g>
+      </a>
+      <a class="trail-link trail-cb tour" href="#project-coffeebreak" aria-label="View CoffeeBreak project" tabindex="0">
+        <path class="trail-hit run-cb tour" pathLength="1" d="M1040 178 C 960 240, 900 300, 920 380 S 820 540, 860 660 S 800 820, 840 900" fill="none" stroke="transparent" stroke-width="20"/>
+        <path class="run-cb tour" d="M1040 178 C 960 240, 900 300, 920 380 S 820 540, 860 660 S 800 820, 840 900" pathLength="1" fill="none" stroke={colors["coffeebreak"]} stroke-width="4" stroke-linecap="round"/>
+        <g class="named-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-cb tour"><rect x="804" y="648" width="112" height="24" rx="3" fill={colors["coffeebreak"]}/><text x="814" y="664" fill="#FFFFFF">03 CoffeeBreak</text></g></g>
+        <g class="number-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-cb tour"><circle cx="860" cy="660" r="21" fill={colors["coffeebreak"]} stroke="#FFFFFF" stroke-width="3"/><text x="860" y="667" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">03</text></g></g>
+      </a>
+      <a class="trail-link trail-cp tour" href="#project-cistou-prirodou" aria-label="View Čistou přírodou project" tabindex="0">
+        <path class="trail-hit run-cp tour" pathLength="1" d="M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900" fill="none" stroke="transparent" stroke-width="20"/>
+        <path class="run-cp tour" d="M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900" pathLength="1" fill="none" stroke={colors["cistou-prirodou"]} stroke-width="4" stroke-linecap="round"/>
+        <g class="named-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-cp tour"><rect x="1095" y="648" width="150" height="24" rx="3" fill={colors["cistou-prirodou"]}/><text x="1105" y="664" fill="#FFFFFF">02 Čistou přírodou</text></g></g>
+        <g class="number-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-cp tour"><circle cx="1170" cy="660" r="21" fill={colors["cistou-prirodou"]} stroke="#FFFFFF" stroke-width="3"/><text x="1170" y="667" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">02</text></g></g>
+      </a>
+      <a class="trail-link trail-kt tour" href="#project-kamtridit" aria-label="View Kamtřídit project" tabindex="0">
+        <path class="trail-hit run-kt tour" pathLength="1" d="M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900" fill="none" stroke="transparent" stroke-width="20"/>
+        <path class="run-kt tour" d="M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900" pathLength="1" fill="none" stroke={colors["kamtridit"]} stroke-width="4" stroke-linecap="round"/>
+        <g class="named-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-kt tour"><rect x="950" y="388" width="120" height="24" rx="3" fill={colors["kamtridit"]}/><text x="960" y="404" fill="#FFFFFF">01 Kamtřídit</text></g></g>
+        <g class="number-signs" aria-hidden="true" font-family="JetBrains Mono" font-size="12"><g class="sign-kt tour"><circle cx="1010" cy="400" r="21" fill={colors["kamtridit"]} stroke="#FFFFFF" stroke-width="3"/><text x="1010" y="407" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="500">01</text></g></g>
+      </a>
       <g class="rider-tt tour">
           <g class="lean"><g class="rider-size">
             <SnowSpray />
@@ -100,7 +109,7 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
             </g>
           </g></g>
       </g>
-      <g font-family="JetBrains Mono" font-size="12" font-weight="500">
+      <g font-family="JetBrains Mono" font-size="12" font-weight="500" aria-hidden="true">
         <g class="fin-tt pop tour"><path d="M731 853 L725 844 L737 844 Z" fill="#14202B"/><rect x="703" y="820" width="56" height="24" rx="12" fill="#14202B"/><text x="731" y="836" text-anchor="middle" fill="#FFFFFF">Done!</text></g>
         <g class="fin-cb pop tour"><path d="M832 826 L826 817 L838 817 Z" fill="#14202B"/><rect x="796.5" y="793" width="71" height="24" rx="12" fill="#14202B"/><text x="832" y="809" text-anchor="middle" fill="#FFFFFF">Finish!</text></g>
         <g class="fin-cp pop tour"><path d="M1191 827 L1185 818 L1197 818 Z" fill="#14202B"/><rect x="1144.5" y="794" width="93" height="24" rx="12" fill="#14202B"/><text x="1191" y="810" text-anchor="middle" fill="#FFFFFF">Completed!</text></g>
@@ -116,14 +125,19 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
           </g></g>
         </g>
       </g>
-      <g class="hello tour"><g class="avatar-size">
+      <g class="hello tour" aria-hidden="true"><g class="avatar-size">
         <path d="M1040 136 L1033 124 L1047 124 Z" fill="#14202B"/>
         <circle cx="1040" cy="92" r="32" fill="#14202B"/>
         <image href="/avatar.jpg" x="1012" y="64" width="56" height="56" clip-path="url(#avatar-clip)" preserveAspectRatio="xMidYMid slice"/>
         <g font-family="JetBrains Mono" font-size="12">
           <g class="hi tour">
-            <rect x="1080" y="80" width="120" height="24" rx="3" fill="#14202B"/>
-            <text x="1090" y="96" fill="#FFFFFF">Hey, it’s me</text>
+            <rect x="1080" y="58" width="188" height="62" rx="4" fill="#14202B"/>
+            <text x="1090" y="75" fill="#FFFFFF" font-size="12">
+              <tspan x="1090">Hey, it’s me.</tspan>
+              <tspan class="winter-story" x="1090" y="91">Let’s snowboard through</tspan>
+              <tspan class="summer-story" x="1090" y="91">Let’s bike through</tspan>
+              <tspan x="1090" y="107">my projects.</tspan>
+            </text>
           </g>
           <g class="bye tour">
             <rect x="1080" y="68" width="160" height="42" rx="3" fill="#14202B"/>
@@ -140,11 +154,14 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
         ))}
       </g>
     </svg>
-  <button class="motion-control" type="button" data-motion data-state="playing">
+  <div class="scene-controls" role="group" aria-label="Scene controls">
+  <SceneSwitch />
+  <button class="motion-control scene-control" type="button" data-motion data-state="playing">
     <svg class="pause-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
     <svg class="play-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3.5a1 1 0 0 1 1.5-.86l10 6.5a1 1 0 0 1 0 1.72l-10 6.5A1 1 0 0 1 5 16.5Z"/></svg>
     <span data-motion-label>Pause animation</span>
   </button>
+  </div>
 </div>
 
 <!-- Set the crop before first paint, without mounting duplicate animated SVGs. -->
@@ -168,7 +185,6 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
     };
     crop();
     new ResizeObserver(crop).observe(map);
-    mobile.addEventListener('change', crop);
   })();
 </script>
 <script>
@@ -222,6 +238,10 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
 </script>
 
 <style>
+.summer-story { display: none; }
+:global([data-season="sun"]) .winter-story { display: none; }
+:global([data-season="sun"]) .summer-story { display: inline; }
+
 .summer-trails { display: none; }
 :global([data-season="sun"]) .summer-trails { display: inline; }
 :global([data-season="sun"]) .snow-cap { fill: #B9CDB9; }
@@ -251,62 +271,78 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
 }
 .flake{animation:snow 11s linear infinite}
 .cabin{offset-path:path('M1390 872 L1150 262');offset-rotate:0deg;animation:cabin 15s linear infinite}
-.tour{animation-duration:22.5s;animation-iteration-count:1;animation-fill-mode:forwards;animation-timing-function:linear}
+.tour{animation-duration:26.5s;animation-iteration-count:1;animation-fill-mode:forwards;animation-timing-function:linear}
 .pop{transform-box:fill-box;transform-origin:50% 100%}
+.trail-tt{animation-name:reveal-tt}
+@keyframes reveal-tt{0%,26.4123%{visibility:hidden}26.4133%,100%{visibility:visible}}
 .run-tt{stroke-dasharray:1 1;animation-name:draw-tt}
-@keyframes draw-tt{0%,13.33%{stroke-dashoffset:1}28.89%{stroke-dashoffset:0.07}33.33%,100%{stroke-dashoffset:0}}
+@keyframes draw-tt{0%,26.4123%{stroke-dashoffset:1}39.6236%{stroke-dashoffset:0.07}43.3934%,100%{stroke-dashoffset:0}}
 .sign-tt{animation-name:sign-tt}
-@keyframes sign-tt{0%,14.67%{opacity:0}17.33%,100%{opacity:1}}
-.rider-tt{--ride-start:3s;offset-path:path('M760 496 C 720 580, 800 660, 740 740 S 760 840, 720 900');offset-rotate:0deg;animation-name:ride-tt}
+@keyframes sign-tt{0%,27.55%{opacity:0;visibility:hidden}29.8085%,100%{opacity:1;visibility:visible}}
+.rider-tt{--ride-start:7s;offset-path:path('M760 496 C 720 580, 800 660, 740 740 S 760 840, 720 900');offset-rotate:0deg;animation-name:ride-tt}
 .rider-tt .lean{animation-delay:var(--ride-start)}
-@keyframes ride-tt{0%,13.33%{offset-distance:0%;opacity:0}14.67%{opacity:1}28.89%{offset-distance:93%;opacity:1}32.44%{offset-distance:93%;opacity:1}33.33%,100%{offset-distance:93%;opacity:0}}
+@keyframes ride-tt{0%,26.4123%{offset-distance:0%;opacity:0}27.55%{opacity:1}39.6236%{offset-distance:94.0566%;opacity:1}42.6377%{offset-distance:94.0566%;opacity:1}43.3934%,100%{offset-distance:94.0566%;opacity:0}}
 .fin-tt{animation-name:fin-tt}
-@keyframes fin-tt{0%,28.89%{opacity:0;transform:scale(0.4)}30.00%,32.44%{opacity:1;transform:scale(1)}33.33%,100%{opacity:0;transform:scale(0.4)}}
+@keyframes fin-tt{0%,39.6236%{opacity:0;transform:scale(0.4)}40.566%,42.6377%{opacity:1;transform:scale(1)}43.3934%,100%{opacity:0;transform:scale(0.4)}}
+.trail-cb{animation-name:reveal-cb}
+@keyframes reveal-cb{0%,43.3934%{visibility:hidden}43.3944%,100%{visibility:visible}}
 .run-cb{stroke-dasharray:1 1;animation-name:draw-cb}
-@keyframes draw-cb{0%,33.33%{stroke-dashoffset:1}48.89%{stroke-dashoffset:0.07}53.33%,100%{stroke-dashoffset:0}}
+@keyframes draw-cb{0%,43.3934%{stroke-dashoffset:1}56.6047%{stroke-dashoffset:0.07}60.3745%,100%{stroke-dashoffset:0}}
 .sign-cb{animation-name:sign-cb}
-@keyframes sign-cb{0%,34.67%{opacity:0}37.33%,100%{opacity:1}}
-.rider-cb{--ride-start:7.5s;offset-path:path('M1040 178 C 960 240, 900 300, 920 380 S 820 540, 860 660 S 800 820, 840 900');offset-rotate:0deg;animation-name:ride-cb}
+@keyframes sign-cb{0%,44.5311%{opacity:0;visibility:hidden}46.7896%,100%{opacity:1;visibility:visible}}
+.rider-cb{--ride-start:11.5s;offset-path:path('M1040 178 C 960 240, 900 300, 920 380 S 820 540, 860 660 S 800 820, 840 900');offset-rotate:0deg;animation-name:ride-cb}
 .rider-cb .lean{animation-delay:var(--ride-start)}
-@keyframes ride-cb{0%,33.33%{offset-distance:0%;opacity:0}34.67%{opacity:1}48.89%{offset-distance:93%;opacity:1}52.44%{offset-distance:93%;opacity:1}53.33%,100%{offset-distance:93%;opacity:0}}
+@keyframes ride-cb{0%,43.3934%{offset-distance:0%;opacity:0}44.5311%{opacity:1}56.6047%{offset-distance:94.0566%;opacity:1}59.6189%{offset-distance:94.0566%;opacity:1}60.3745%,100%{offset-distance:94.0566%;opacity:0}}
 .fin-cb{animation-name:fin-cb}
-@keyframes fin-cb{0%,48.89%{opacity:0;transform:scale(0.4)}50.00%,52.44%{opacity:1;transform:scale(1)}53.33%,100%{opacity:0;transform:scale(0.4)}}
+@keyframes fin-cb{0%,56.6047%{opacity:0;transform:scale(0.4)}57.5472%,59.6189%{opacity:1;transform:scale(1)}60.3745%,100%{opacity:0;transform:scale(0.4)}}
+.trail-cp{animation-name:reveal-cp}
+@keyframes reveal-cp{0%,60.3745%{visibility:hidden}60.3755%,100%{visibility:visible}}
 .run-cp{stroke-dasharray:1 1;animation-name:draw-cp}
-@keyframes draw-cp{0%,53.33%{stroke-dashoffset:1}68.89%{stroke-dashoffset:0.07}73.33%,100%{stroke-dashoffset:0}}
+@keyframes draw-cp{0%,60.3745%{stroke-dashoffset:1}73.5858%{stroke-dashoffset:0.07}77.3557%,100%{stroke-dashoffset:0}}
 .sign-cp{animation-name:sign-cp}
-@keyframes sign-cp{0%,54.67%{opacity:0}57.33%,100%{opacity:1}}
-.rider-cp{--ride-start:12s;offset-path:path('M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900');offset-rotate:0deg;animation-name:ride-cp}
+@keyframes sign-cp{0%,61.5123%{opacity:0;visibility:hidden}63.7708%,100%{opacity:1;visibility:visible}}
+.rider-cp{--ride-start:16s;offset-path:path('M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900');offset-rotate:0deg;animation-name:ride-cp}
 .rider-cp .lean{animation-delay:var(--ride-start)}
-@keyframes ride-cp{0%,53.33%{offset-distance:0%;opacity:0}54.67%{opacity:1}68.89%{offset-distance:93%;opacity:1}72.44%{offset-distance:93%;opacity:1}73.33%,100%{offset-distance:93%;opacity:0}}
+@keyframes ride-cp{0%,60.3745%{offset-distance:0%;opacity:0}61.5123%{opacity:1}73.5858%{offset-distance:94.0566%;opacity:1}76.6%{offset-distance:94.0566%;opacity:1}77.3557%,100%{offset-distance:94.0566%;opacity:0}}
 .fin-cp{animation-name:fin-cp}
-@keyframes fin-cp{0%,68.89%{opacity:0;transform:scale(0.4)}70.00%,72.44%{opacity:1;transform:scale(1)}73.33%,100%{opacity:0;transform:scale(0.4)}}
+@keyframes fin-cp{0%,73.5858%{opacity:0;transform:scale(0.4)}74.5283%,76.6%{opacity:1;transform:scale(1)}77.3557%,100%{opacity:0;transform:scale(0.4)}}
+.trail-kt{animation-name:reveal-kt}
+@keyframes reveal-kt{0%,77.3557%{visibility:hidden}77.3567%,100%{visibility:visible}}
 .run-kt{stroke-dasharray:1 1;animation-name:draw-kt}
-@keyframes draw-kt{0%,73.33%{stroke-dashoffset:1}88.89%{stroke-dashoffset:0.07}93.33%,100%{stroke-dashoffset:0}}
+@keyframes draw-kt{0%,77.3557%{stroke-dashoffset:1}90.567%{stroke-dashoffset:0.07}94.3368%,100%{stroke-dashoffset:0}}
 .sign-kt{animation-name:sign-kt}
-@keyframes sign-kt{0%,74.67%{opacity:0}77.33%,100%{opacity:1}}
-.rider-kt{--ride-start:16.5s;offset-path:path('M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900');offset-rotate:0deg;animation-name:ride-kt}
+@keyframes sign-kt{0%,78.4934%{opacity:0;visibility:hidden}80.7519%,100%{opacity:1;visibility:visible}}
+.rider-kt{--ride-start:20.5s;offset-path:path('M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900');offset-rotate:0deg;animation-name:ride-kt}
 .rider-kt .lean{animation-delay:var(--ride-start)}
-@keyframes ride-kt{0%,73.33%{offset-distance:0%;opacity:0}74.67%{opacity:1}88.89%{offset-distance:93%;opacity:1}92.44%{offset-distance:93%;opacity:1}93.33%,100%{offset-distance:93%;opacity:0}}
+@keyframes ride-kt{0%,77.3557%{offset-distance:0%;opacity:0}78.4934%{opacity:1}90.567%{offset-distance:94.0566%;opacity:1}93.5811%{offset-distance:94.0566%;opacity:1}94.3368%,100%{offset-distance:94.0566%;opacity:0}}
 .fin-kt{animation-name:fin-kt}
-@keyframes fin-kt{0%,88.89%{opacity:0;transform:scale(0.4)}90.00%,92.44%{opacity:1;transform:scale(1)}93.33%,100%{opacity:0;transform:scale(0.4)}}
+@keyframes fin-kt{0%,90.567%{opacity:0;transform:scale(0.4)}91.5094%,93.5811%{opacity:1;transform:scale(1)}94.3368%,100%{opacity:0;transform:scale(0.4)}}
 .summit{animation-name:summit}.summit .lean{animation:none}
-@keyframes summit{0%{opacity:0}1.33%,12.00%{opacity:1}13.33%,93.33%{opacity:0}95.11%,100%{opacity:1}}
+@keyframes summit{0%{opacity:0}1.1292%,25.283%{opacity:1}26.4123%,94.3368%{opacity:0}95.8481%,100%{opacity:1}}
 .hello{animation-name:hello}
 @keyframes hello {
-  0%, 1% { opacity: 0; transform: translateY(8px); }
-  4%, 11.11% { opacity: 1; transform: translateY(0); }
-  13%, 95% { opacity: 0; transform: translateY(8px); }
-  98%, 100% { opacity: 1; transform: translateY(0); }
+  0%, 0.8491% { opacity: 0; transform: translateY(8px); }
+  3.3962%, 24.5274% { opacity: 1; transform: translateY(0); }
+  26.1321%, 95.7547% { opacity: 0; transform: translateY(8px); }
+  98.3019%, 100% { opacity: 1; transform: translateY(0); }
 }
 .bye{animation-name:bye}.hi{animation-name:hi}
-@keyframes hi{0%,13.33%{opacity:1}13.38%,100%{opacity:0}}
-@keyframes bye{0%,13.33%{opacity:0}13.38%,100%{opacity:1}}
+@keyframes hi{0%,26.4123%{opacity:1}26.4547%,100%{opacity:0}}
+@keyframes bye{0%,26.4123%{opacity:0}26.4547%,100%{opacity:1}}
 
 .piste-map { position: absolute; inset: 0; overflow: hidden; }
-.piste-svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.piste-svg { pointer-events: none; position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.trail-link { pointer-events: visiblePainted; cursor: pointer; }
+.trail-hit { pointer-events: visibleStroke; }
+.trail-link:hover > .tour:not(.trail-hit), .trail-link:focus-visible > .tour:not(.trail-hit) { stroke-width: 6; }
+.piste-svg .trail-link:focus, .piste-svg .trail-link:focus-visible { outline: none !important; box-shadow: none; }
+.trail-link:focus-visible .trail-hit { stroke: #FFFFFF; stroke-opacity: .6; }
 .number-signs { display: none; }
-.motion-control { position: absolute; z-index: 3; right: 16px; bottom: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 0 15px; border: 1px solid rgb(255 255 255 / .2); border-radius: 6px; font: 600 12px var(--mono); color: #FFFFFF; background: var(--ink); box-shadow: 0 3px 10px rgb(0 0 0 / .12); cursor: pointer; transition: background .2s, transform .2s; }
-.motion-control:hover { background: #3D5648; transform: translateY(-1px); }
+.scene-controls { position: absolute; z-index: 3; right: 16px; bottom: 14px; display: flex; align-items: center; gap: 8px; }
+@media (min-width: 768px) {
+  .scene-controls { display: grid; grid-template-columns: minmax(0, 1fr); width: 180px; }
+  .motion-control { width: 100%; }
+}
 .motion-control svg { flex-shrink: 0; }
 .motion-control .play-icon, .motion-control[data-state="paused"] .pause-icon { display: none; }
 .motion-control[data-state="paused"] .play-icon { display: block; }

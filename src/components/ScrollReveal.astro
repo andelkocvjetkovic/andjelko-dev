@@ -2,9 +2,9 @@
   import { scrollToAnchor } from '../scripts/scroll';
   document.addEventListener('click', event => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
-    if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
-    const url = new URL(link.href);
+    const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement | SVGAElement>('a[href]') : null;
+    if (!link || link.hasAttribute('download') || (link.getAttribute('target') && link.getAttribute('target') !== '_self')) return;
+    const url = new URL(link.getAttribute('href')!, document.baseURI);
     if (url.origin !== location.origin || url.pathname !== location.pathname || url.search !== location.search || !url.hash) return;
     let target: HTMLElement | null;
     try { target = document.getElementById(decodeURIComponent(url.hash.slice(1))); } catch { return; }
@@ -14,7 +14,7 @@
   });
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const items = document.querySelectorAll<HTMLElement>([
-    '[data-reveal]', '.hero-copy > *', '.legend > *', '.run-copy > *', '.run-image',
+    '[data-reveal]', '.hero-copy > *', '.run-copy > *', '.run-image',
     '.about-heading > *', '.about-copy > *', '.contact-copy > *', '.contact > .socials',
   ].join(','));
   const observer = new IntersectionObserver(entries => {

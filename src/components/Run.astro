@@ -11,7 +11,7 @@ const dimensions: Record<string, [number, number]> = {
 };
 const [width, height] = dimensions[run.slug];
 ---
-<article class:list={['run', { compact, reverse }]} style={`--run-color: ${run.color}`} aria-labelledby={`title-${run.slug}`}>
+<article id={`project-${run.slug}`} class:list={['run', { compact, reverse }]} style={`--run-color: ${run.color}`} aria-labelledby={`title-${run.slug}`}>
   <div class="run-copy">
     <p class="run-label"><i aria-hidden="true"></i>Run {run.number}</p>
     <Heading id={`title-${run.slug}`}>{run.name}</Heading>

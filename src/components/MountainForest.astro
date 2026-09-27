@@ -38,15 +38,6 @@ for (let row=0; row<17; row++) {
 trees.sort((a,b)=>a.y-b.y);
 const tones=['#3E7756','#356A4C','#4D835B'];
 ---
-<defs>
-  <linearGradient id="forest-copy-fade" gradientUnits="userSpaceOnUse" x1="520" x2="810">
-    <stop offset="0" stop-color="white" stop-opacity=".08"/>
-    <stop offset="1" stop-color="white"/>
-  </linearGradient>
-  <mask id="forest-copy-mask" maskUnits="userSpaceOnUse" x="-10000" y="0" width="20000" height="1000">
-    <rect x="-10000" width="20000" height="1000" fill="url(#forest-copy-fade)"/>
-  </mask>
-</defs>
 <g class="mountain-forest">
   {trees.map(({x,y,scale,tone}) => <g transform={`translate(${x} ${y}) scale(${scale})`}>
     <ellipse cy="4" rx="17" ry="4" fill="var(--forest-shadow, #637E91)" opacity=".14"/>
@@ -58,9 +49,7 @@ const tones=['#3E7756','#356A4C','#4D835B'];
   <g fill="var(--forest-rock, #E7EEF2)"><path d="m782 818 8-7 14 2 5 7h-27ZM1154 474l10-9 13 3 6 8h-29ZM1360 850l13-10 17 4 7 10h-37Z"/></g>
 </g>
 <style>
-  .mountain-forest { mask: url(#forest-copy-mask); }
   :global([data-season="sun"]) .mountain-forest { --forest-shadow: #294F39; --forest-trunk: #736349; --forest-shade: #244F3B; --forest-rock: #738D75; }
   :global([data-season="sun"]) [style] { --tree-fill: var(--summer-tree); }
   :global([data-season="sun"]) .tree-snow { display: none; }
-  @media (max-width: 767px) { .mountain-forest { mask: none; } }
 </style>

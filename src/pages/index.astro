@@ -1,6 +1,5 @@
 ---
 import Piste from '../layouts/Piste.astro';
-import SceneSwitch from '../components/SceneSwitch.astro';
 import PisteMap from '../components/PisteMap.astro';
 import Run from '../components/Run.astro';
 import { site, runs } from '../data/site';
@@ -12,7 +11,7 @@ import { site, runs } from '../data/site';
       <p class="hero-eyebrow eyebrow"><span>Senior Frontend Engineer</span><span class="eyebrow-divider"> · </span><span>Remote · EU work authorization · CET</span></p>
       <h1 id="intro">I build product interfaces end to end, from design to production.</h1>
       <p class="hero-lead">Working across design, frontend and AI, including the AI features and backend work a product needs.</p>
-      <div class="hero-actions"><a class="resume-button" href={site.resumeWeb}>Resume</a><SceneSwitch /></div>
+      <div class="hero-actions"><a class="resume-button" href={site.resumeWeb}>Resume</a></div>
     </div>
     <PisteMap />
   </section>
