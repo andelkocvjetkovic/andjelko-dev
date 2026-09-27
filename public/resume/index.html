@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andjelko Cvjetkovic Resume</title>
+<meta name="author" content="Andjelko Cvjetkovic">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Resume of Andjelko Cvjetkovic, Senior Frontend Engineer, design engineering and AI product interfaces. React, Next.js, TypeScript, Node.js.">
+<style>
+  @font-face { font-family: 'Inter'; font-weight: 400; font-display: swap; src: url('./fonts/inter-latin-400-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Inter'; font-weight: 400; font-display: swap; src: url('./fonts/inter-latin-ext-400-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+1EF2-1EFF,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-weight: 500; font-display: swap; src: url('./fonts/inter-latin-500-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Inter'; font-weight: 500; font-display: swap; src: url('./fonts/inter-latin-ext-500-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+1EF2-1EFF,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-weight: 600; font-display: swap; src: url('./fonts/inter-latin-600-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Inter'; font-weight: 600; font-display: swap; src: url('./fonts/inter-latin-ext-600-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+1EF2-1EFF,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-weight: 700; font-display: swap; src: url('./fonts/inter-latin-700-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Inter'; font-weight: 700; font-display: swap; src: url('./fonts/inter-latin-ext-700-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+1EF2-1EFF,U+2C60-2C7F,U+A720-A7FF; }
+
+  :root {
+    --fg: #0A0A0A;
+    --fg-muted: #555555;
+    --accent: #1F4E79;
+    --rule: #DADADA;
+    --paper: #FFFFFF;
+    --desk: #EDEDED;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @page { size: A4; margin: 0; }
+
+  html { background: var(--desk); }
+
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', Arial, sans-serif;
+    font-size: 9pt;
+    line-height: 1.34;
+    color: var(--fg);
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "calt" 0;
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 24px auto;
+    padding: 10mm 14mm 8mm;
+    background: var(--paper);
+    box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* Header */
+  h1 {
+    font-size: 21pt;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .headline {
+    margin-top: 3pt;
+    font-size: 10.5pt;
+    font-weight: 600;
+  }
+  .headline .stack { font-weight: 500; color: var(--fg-muted); }
+  .meta { margin-top: 5pt; color: var(--fg-muted); }
+  .meta a { color: var(--accent); }
+  .meta .sep { color: #9A9A9A; padding: 0 1pt; }
+  .meta .stackline { color: var(--fg); font-weight: 500; }
+
+  /* Sections */
+  h2 {
+    margin-top: 9pt;
+    margin-bottom: 3.5pt;
+    padding-bottom: 2pt;
+    border-bottom: 0.75pt solid var(--rule);
+    font-size: 8.4pt;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  p + p { margin-top: 3pt; }
+
+  /* Skills */
+  .skills { list-style: none; }
+  .skills li { padding-left: 0; }
+  .skills li + li { margin-top: 1.2pt; }
+  .skills strong { font-weight: 600; }
+
+  /* Experience */
+  .role {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+  .role h3 { font-size: 10pt; font-weight: 700; }
+  .role .when { color: var(--fg-muted); white-space: nowrap; }
+  .company-desc { margin-top: 1.5pt; color: var(--fg-muted); }
+
+  h4 {
+    margin-top: 5.5pt;
+    font-size: 9pt;
+    font-weight: 700;
+  }
+  h4 .ctx { font-weight: 400; color: var(--fg-muted); }
+
+  ul.bullets { margin-top: 2pt; padding-left: 11pt; }
+  ul.bullets li { padding-left: 1pt; }
+  ul.bullets li + li { margin-top: 1.6pt; }
+  ul.bullets li::marker { color: var(--accent); }
+  ul.bullets strong { font-weight: 600; }
+
+  .edu-row { display: flex; justify-content: space-between; gap: 12pt; align-items: baseline; }
+  .edu-row .when { color: var(--fg-muted); white-space: nowrap; }
+  .edu-note { color: var(--fg-muted); margin-top: 1pt; }
+
+  @media print {
+    html { background: none; }
+    .page { margin: 0; box-shadow: none; width: auto; min-height: auto; }
+  }
+
+  @media screen and (max-width: 820px) {
+    body { font-size: 10.5pt; }
+    .page { width: auto; min-height: 0; margin: 0; padding: 20px 16px 32px; box-shadow: none; }
+    .role, .edu-row { flex-direction: column; gap: 0; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header>
+    <h1>Andjelko Cvjetkovic</h1>
+    <p class="headline">Senior Frontend Engineer · Design Engineering · AI Product Interfaces</p>
+    <p class="meta">
+      <span class="stackline">React · Next.js · TypeScript · Node.js</span> <span class="sep">|</span> Bosnia and Herzegovina (CET) · Remote · EU work authorization (Croatian citizen)<br>
+      <a href="mailto:andjelko.cvjetkovic@gmail.com">andjelko.cvjetkovic@gmail.com</a> <span class="sep">·</span> <a href="https://andjelko.dev">andjelko.dev</a> <span class="sep">·</span> <a href="https://github.com/andelkocvjetkovic">github.com/andelkocvjetkovic</a> <span class="sep">·</span> <a href="https://www.linkedin.com/in/andjelkocvjetkovic/">linkedin.com/in/andjelkocvjetkovic</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Summary</h2>
+    <p>Senior frontend engineer with 5 years of experience shipping production web apps as the sole frontend owner on client and in-house products, from a nationwide recycling map for the Czech packaging authority to a restaurant platform with AI menu digitization. I work across the product: designing interfaces through an AI-assisted Figma-to-code loop, building design systems, and shipping the backend work features need (Fastify, Express, PostgreSQL). AI is part of both what I build (vision-LLM features, streaming LLM interfaces) and how I build it (Claude Code, Codex, Figma MCP).</p>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <ul class="skills">
+      <li><strong>Frontend:</strong> React, Next.js, TypeScript, JavaScript, SvelteKit, Astro, TanStack Query</li>
+      <li><strong>Design engineering:</strong> design systems, Figma-to-code (Figma MCP), Tailwind, Radix UI, shadcn/ui, React Aria, accessibility</li>
+      <li><strong>AI &amp; real-time:</strong> vision-LLM integration (NVIDIA Nemotron VL), LLM streaming UIs (SSE), WebSockets</li>
+      <li><strong>Backend &amp; data:</strong> Node.js, Fastify, Express, Zod, Prisma, PostgreSQL, REST APIs, OIDC (Entra ID), Docker</li>
+      <li><strong>Maps &amp; data visualization:</strong> MapLibre GL JS, Visx, D3.js, Chart.js</li>
+      <li><strong>Testing &amp; tooling:</strong> Vitest, Playwright, Sentry, Vercel, Turborepo, Git</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <div class="role">
+      <h3>Senior Frontend Engineer, Codepool</h3>
+      <span class="when">Jul 2021 – Present · Remote</span>
+    </div>
+    <p class="company-desc">Software consultancy building products for funded teams across the US and EU, plus in-house products. Sole frontend engineer on the engagements below, increasingly owning backend and UX too.</p>
+
+    <h4>TableTap <span class="ctx">· Restaurant ordering and operations platform (in-house)</span></h4>
+    <ul class="bullets">
+      <li>Designed and built the AI menu import: staff photograph a paper menu, a vision LLM (NVIDIA Nemotron VL) drafts it, and a multi-step review wizard lets them check categories, items and prices against the photo before publishing. In production. Also improved the extraction service (item types, category mapping, HEIC support, prompts).</li>
+      <li>Took the admin panel from AI-generated prototype to production (SvelteKit, TypeScript): component architecture, a shared form system, multi-branch roles, inventory, menus, and allergens.</li>
+      <li>Built analytics from scratch (busiest-hours heatmap, preparation time, top-item performance), designing the views in Figma and defining the data shape with the backend team.</li>
+      <li>Redesigned the UI through an AI-assisted design loop (Claude Code, Codex, Figma MCP); built the Astro marketing site.</li>
+    </ul>
+
+    <h4>EKO-KOM <span class="ctx">· Kamtřídit.cz and Čistou přírodou for the Czech national packaging authority</span></h4>
+    <ul class="bullets">
+      <li><strong>Kamtřídit:</strong> nationwide map of 33,000+ recycling locations kept fast with marker clustering and list virtualization; Mapy.com address search and turn-by-turn navigation; web plus iOS and Android; 200+ active contributors.</li>
+      <li><strong>Čistou přírodou:</strong> complete redesign of the national hiking and cycling guide with 73 routes, GPX ingestion and interactive waypoints. In production with ~12,000 weekly visitors in hiking season.</li>
+      <li>Built the shared bilingual (EN/CZ) CMS with role-based access; on the Express/PostgreSQL API, built bulk location import with preview, duplicate detection, and safe handling of concurrent edits.</li>
+    </ul>
+
+    <h4>CoffeeBreak <span class="ctx">· Opportunity and pipeline management platform</span></h4>
+    <ul class="bullets">
+      <li>Redesigned the product in Figma and built it as primary frontend engineer since 2023 (React, TanStack Query): opportunity workflows, dashboard statistics, Entra ID sign-in.</li>
+      <li>Built the new TypeScript backend replacing the legacy API, following the team's architecture: Fastify, Zod, Prisma, PostgreSQL, Entra ID (OIDC) sessions, scheduled snapshot and retention jobs, Sentry, Docker deployments.</li>
+    </ul>
+
+    <h4>Also at Codepool</h4>
+    <ul class="bullets">
+      <li><strong>Adria F&amp;B:</strong> built the design foundation on React Aria and redesigned the bookkeeping admin app.</li>
+      <li><strong>Scrum Glide:</strong> prototyped an AI chat assistant and ticket generator with SSE streaming (in-house agile tool).</li>
+      <li><strong>BH-Passport:</strong> rebuilt a WordPress travel-agency site as Next.js + Sanity CMS, reaching Lighthouse 97.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="edu-row">
+      <p><strong>Information Technology (Bachelor, 180 ECTS)</strong>, CEPS (Centar za poslovne studije), Kiseljak</p>
+      <span class="when">2026 – Present</span>
+    </div>
+    <p class="edu-note">Enrolled directly into 2nd year; credits transferred from FIT, “Džemal Bijedić” University of Mostar (2019–2022).</p>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <p>English (full professional proficiency) · Bosnian / Croatian (native)</p>
+  </section>
+
+</main>
+</body>
+</html>

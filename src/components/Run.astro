@@ -1,0 +1,24 @@
+---
+import type { Project } from '../data/site';
+interface Props { run: Project & { number: string }; compact?: boolean; reverse?: boolean; }
+const { run, compact = false, reverse = false } = Astro.props;
+const Heading = compact ? 'h3' : 'h2';
+// Intrinsic sizes reserve space before lazy-loaded screenshots arrive.
+const dimensions: Record<string, [number, number]> = {
+  kamtridit: [1600, 1000], 'cistou-prirodou': [1600, 1000],
+  coffeebreak: [1440, 900], tabletap: [3944, 2564], 'bh-passport': [1600, 1000],
+};
+const [width, height] = dimensions[run.slug];
+---
+<article class:list={['run', { compact, reverse }]} style={`--run-color: ${run.color}`} aria-labelledby={`title-${run.slug}`}>
+  <div class="run-copy">
+    <p class="run-label"><i aria-hidden="true"></i>Run {run.number}</p>
+    <Heading id={`title-${run.slug}`}>{run.name}</Heading>
+    <p class="run-summary">{run.summary}</p>
+    {(run.caseStudy || run.live) && <div class="run-links">
+      {run.caseStudy && <a href={run.caseStudy}>Ride the case study →</a>}
+      {run.live && <a href={run.live}>{new URL(run.live).hostname.replace(/^www\./, '')} ↗</a>}
+    </div>}
+  </div>
+  {run.image && <div class:list={['run-image', { laptop: run.slug === 'tabletap' }]}><img src={run.image.src} alt={run.image.alt} width={width} height={height} loading="lazy" decoding="async" /></div>}
+</article>

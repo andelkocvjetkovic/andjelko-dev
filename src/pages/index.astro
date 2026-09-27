@@ -1,29 +1,38 @@
 ---
-import Base from '../layouts/Base.astro';
-import About from '../components/landing/About.astro';
-import Contact from '../components/landing/Contact.astro';
-import Footer from '../components/landing/Footer.astro';
-import Hero from '../components/landing/Hero.astro';
-import SelectedMetrics from '../components/landing/SelectedMetrics.astro';
-import SelectedWork from '../components/landing/SelectedWork.astro';
+import Piste from '../layouts/Piste.astro';
+import PisteMap from '../components/PisteMap.astro';
+import Run from '../components/Run.astro';
+import { site, runs } from '../data/site';
 ---
-
-<Base>
-  <main class="container" aria-label="Andjelko Cvjetkovic portfolio">
-    <Hero />
-    <SelectedWork />
-    <SelectedMetrics />
-    <About />
-    <Contact />
-    <Footer />
-  </main>
-</Base>
-
-<style>
-  .container {
-    width: 100%;
-    max-width: var(--content-width);
-    margin-left: auto;
-    margin-right: auto;
-  }
-</style>
+<Piste>
+  <div class="intro-screen">
+  <section class="hero" aria-labelledby="intro">
+    <div class="hero-copy page-pad">
+      <p class="hero-eyebrow eyebrow"><span>Senior Frontend Engineer</span><span class="eyebrow-divider"> · </span><span>Remote · EU work authorization · CET</span></p>
+      <h1 id="intro">I build product interfaces end to end, from design to production.</h1>
+      <p class="hero-lead">Working across design, frontend and AI, including the AI features and backend work a product needs.</p>
+      <div><a class="resume-button" href={site.resumeWeb}>Resume</a></div>
+    </div>
+    <PisteMap />
+  </section>
+  <div class="legend" aria-label="The runs">
+    <span class="legend-title">The runs</span>
+    {runs.slice(0, 4).map(run => <span class="legend-item" style={`--run-color: ${run.color}`}><i aria-hidden="true"></i>{run.number} {run.name}</span>)}
+  </div>
+  </div>
+  <section id="runs" class="runs page-pad" aria-label="Selected project runs">
+    <span id="work" aria-hidden="true"></span>
+    {runs.slice(0, 2).map((run, index) => <Run run={run} reverse={index === 1} />)}
+    <div class="minor-runs">{runs.slice(2).map(run => <Run run={run} compact />)}</div>
+  </section>
+  <section id="about" class="about page-pad" aria-labelledby="about-title">
+    <div class="about-heading">
+      <p class="eyebrow">Off-piste</p>
+      <h2 id="about-title">Five years owning the whole frontend</h2>
+    </div>
+    <div class="about-copy">
+      <p>I’ve spent five years as the only frontend engineer on most of my projects, so I’m used to owning everything from architecture to the last pixel. Lately that has grown into design and backend work too.</p>
+      <p>Away from the keyboard I’m snowboarding or on a mountain bike, and at home there’s usually a game on the PS5. Also a big Attack on Titan fan.</p>
+    </div>
+  </section>
+</Piste>

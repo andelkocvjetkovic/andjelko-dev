@@ -1,0 +1,156 @@
+---
+import type { Project } from '../data/site';
+
+interface Props {
+  project: Project;
+  featured?: boolean;
+}
+
+const { project, featured = false } = Astro.props;
+const primaryHref = project.caseStudy ?? project.live;
+const primaryIsExternal = !project.caseStudy && !!project.live;
+---
+
+<article class:list={['card', { featured }]} data-reveal>
+  <a
+    class="visual"
+    href={primaryHref}
+    target={primaryIsExternal ? '_blank' : undefined}
+    rel={primaryIsExternal ? 'noopener noreferrer' : undefined}
+    tabindex="-1"
+    aria-hidden="true"
+    style={project.image?.bg ? `--visual-bg: ${project.image.bg}` : undefined}
+    data-empty={!project.image ? '' : undefined}
+    data-static={!primaryHref ? '' : undefined}
+  >
+    {
+      project.image ? (
+        <img
+          src={project.image.src}
+          alt=""
+          loading={featured ? 'eager' : 'lazy'}
+          decoding="async"
+          class:list={[project.image.fit === 'cover' ? 'cover' : 'contain']}
+        />
+      ) : (
+        <span class="visual-name">{project.name}</span>
+      )
+    }
+  </a>
+
+  <div class="body">
+    <div class="head">
+      <p class="kind">{project.kind}</p>
+      <h3 class="name">
+        {
+          primaryHref ? (
+            <a
+              href={primaryHref}
+              target={primaryIsExternal ? '_blank' : undefined}
+              rel={primaryIsExternal ? 'noopener noreferrer' : undefined}
+            >
+              {project.name}
+            </a>
+          ) : (
+            project.name
+          )
+        }
+      </h3>
+    </div>
+    <p class="summary">{project.summary}</p>
+    <ul class="stack" aria-label="Tech stack">
+      {project.stack.map((s) => <li>{s}</li>)}
+    </ul>
+    <div class="actions">
+      {
+        project.caseStudy && (
+          <a class="btn btn-primary" href={project.caseStudy}>
+            Read case study
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+          </a>
+        )
+      }
+      {
+        project.live && (
+          <a class="btn" href={project.live} target="_blank" rel="noopener noreferrer">
+            Live site
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5" /></svg>
+          </a>
+        )
+      }
+      {project.note && <span class="pill">{project.note}</span>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .visual {
+    --visual-bg: var(--surface-2);
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    background: var(--visual-bg);
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  @media (prefers-color-scheme: dark) {
+    .visual { background: color-mix(in srgb, var(--visual-bg) 10%, var(--surface-2)); }
+  }
+  .visual img { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .visual img.contain { object-fit: contain; padding: 6% 8%; }
+  .visual img.cover { object-fit: cover; object-position: left top; }
+  .card:hover .visual:not([data-static]) img { transform: scale(1.025); }
+
+  .visual[data-empty] {
+    background:
+      radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--surface-2), var(--surface));
+  }
+  .visual-name {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: color-mix(in srgb, var(--fg) 22%, transparent);
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .body { display: flex; flex-direction: column; gap: 14px; padding: 24px; }
+  .kind { font-size: 13px; font-weight: 500; color: var(--fg-muted); margin-bottom: 4px; }
+  .name { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
+  .name a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .summary { font-size: 15px; color: var(--fg-muted); line-height: 1.6; }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+  .stack li {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    background: var(--surface-2);
+    padding: 4px 9px;
+    border-radius: 6px;
+  }
+
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: auto; padding-top: 6px; }
+  .actions .btn { height: 40px; font-size: 14px; padding: 0 16px; }
+
+  /* Featured: image and text side by side on wide screens */
+  .featured { grid-template-rows: none; }
+  @media (min-width: 900px) {
+    .featured { grid-template-columns: 1.35fr 1fr; }
+    .featured .visual { aspect-ratio: auto; min-height: 440px; border-bottom: 0; border-right: 1px solid var(--border); }
+    .featured .body { padding: 40px; justify-content: center; gap: 18px; }
+    .featured .name { font-size: 32px; }
+    .featured .summary { font-size: 16px; }
+  }
+</style>
