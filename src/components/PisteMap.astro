@@ -111,9 +111,14 @@ const colors = Object.fromEntries(runs.map((run) => [run.slug, run.color]));
         <circle cx="1040" cy="92" r="32" fill="#14202B"/>
         <image href="/avatar.jpg" x="1012" y="64" width="56" height="56" clip-path="url(#avatar-clip)" preserveAspectRatio="xMidYMid slice"/>
         <g font-family="JetBrains Mono" font-size="12">
-          <rect x="1080" y="80" width="120" height="24" rx="3" fill="#14202B"/>
-          <text class="hi tour" x="1090" y="96" fill="#FFFFFF">Hey, it’s me</text>
-          <text class="bye tour" x="1090" y="96" fill="#FFFFFF">See the runs ↓</text>
+          <g class="hi tour">
+            <rect x="1080" y="80" width="120" height="24" rx="3" fill="#14202B"/>
+            <text x="1090" y="96" fill="#FFFFFF">Hey, it’s me</text>
+          </g>
+          <g class="bye tour">
+            <rect x="1080" y="68" width="160" height="42" rx="3" fill="#14202B"/>
+            <text x="1090" y="84" fill="#FFFFFF">Your turn.<tspan x="1090" dy="16">Explore the runs ↓</tspan></text>
+          </g>
         </g>
       </g>
       </g>
