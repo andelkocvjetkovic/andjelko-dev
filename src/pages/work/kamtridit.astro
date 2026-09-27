@@ -213,15 +213,33 @@ const flow = [
   .pull { margin-top: 24px !important; padding-left: 20px; border-left: 3px solid var(--accent); font-size: 21px !important; font-weight: 500; line-height: 1.5 !important; letter-spacing: -0.01em; }
 
   .flow-fig { margin-top: 32px; }
-  .flow { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .flow {
+    --flow-gap: 24px;
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3.5 10.5 8 6 12.5'/%3E%3C/svg%3E");
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--flow-gap);
+  }
   .node { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); font-size: 14px; color: var(--fg-muted); line-height: 1.5; }
   .node strong { font-size: 17px; color: var(--fg); font-weight: 600; letter-spacing: -0.01em; padding-right: 20px; }
   .node-step { position: absolute; top: 16px; right: 16px; font-size: 12px; font-weight: 600; color: var(--fg-faint); }
   .node-focus { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); box-shadow: 0 0 0 4px var(--accent-soft); }
-  .node + .node::before { content: ''; position: absolute; left: -13px; top: 50%; width: 10px; height: 10px; border-top: 1.5px solid var(--fg-faint); border-right: 1.5px solid var(--fg-faint); transform: translateY(-50%) rotate(45deg); }
+  .node + .node::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--flow-gap) / -2 - 1px); /* -1px: offset from the padding box past the 1px border */
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    background: var(--fg-faint);
+    -webkit-mask: var(--chevron) center / contain no-repeat;
+    mask: var(--chevron) center / contain no-repeat;
+    transform: translate(-50%, -50%);
+  }
   @media (max-width: 860px) {
-    .flow { grid-template-columns: 1fr; gap: 22px; }
-    .node + .node::before { left: 50%; top: -15px; transform: translateX(-50%) rotate(135deg); }
+    .flow { grid-template-columns: 1fr; --flow-gap: 28px; }
+    .node + .node::before { left: 50%; top: calc(var(--flow-gap) / -2 - 1px); transform: translate(-50%, -50%) rotate(90deg); }
   }
 
   .shot { margin-top: 40px; }
