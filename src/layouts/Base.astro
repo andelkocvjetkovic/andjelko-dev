@@ -142,6 +142,9 @@ const ogImage = new URL(image, Astro.site);
 
   body { min-height: 100vh; background: var(--bg); overflow-x: hidden; }
 
+  /* Keep anchored sections clear of the sticky header (64px) when jumping from the nav. */
+  [id] { scroll-margin-top: 96px; }
+
   img { display: block; max-width: 100%; height: auto; }
 
   a { color: inherit; text-decoration: none; }
