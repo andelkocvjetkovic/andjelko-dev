@@ -1,29 +1,215 @@
 ---
 import Base from '../layouts/Base.astro';
-import About from '../components/landing/About.astro';
-import Contact from '../components/landing/Contact.astro';
-import Footer from '../components/landing/Footer.astro';
-import Hero from '../components/landing/Hero.astro';
-import SelectedMetrics from '../components/landing/SelectedMetrics.astro';
-import SelectedWork from '../components/landing/SelectedWork.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site, featured, projects, aiWork, metrics, about } from '../data/site';
 ---
 
 <Base>
-  <main class="container" aria-label="Andjelko Cvjetkovic portfolio">
-    <Hero />
-    <SelectedWork />
-    <SelectedMetrics />
-    <About />
-    <Contact />
-    <Footer />
-  </main>
+  <!-- Hero -->
+  <section class="hero wrap">
+    <div class="hero-status" data-reveal>
+      <span class="pill">{site.workAuth}</span>
+    </div>
+    <p class="eyebrow hero-eyebrow" data-reveal>{site.role}</p>
+    <h1 class="hero-title" data-reveal>
+      I design and build product interfaces <span class="muted">end to end, from Figma to production.</span>
+    </h1>
+    <p class="hero-lead" data-reveal>
+      Working across design, frontend and AI, including the AI features and backend work a product needs.
+    </p>
+    <div class="hero-actions" data-reveal>
+      <a class="btn btn-primary" href="#work">
+        See my work
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4" /></svg>
+      </a>
+      <a class="btn" href={site.resumePdf}>Resume (PDF)</a>
+      <a class="btn" href={`mailto:${site.email}`}>Email me</a>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work" class="work wrap" aria-labelledby="work-title">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Selected work</p>
+      <h2 id="work-title" class="section-title">Products I built and shipped</h2>
+    </div>
+    <ProjectCard project={featured} featured />
+    <div class="grid">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <!-- AI & real-time -->
+  <section class="ai wrap" aria-labelledby="ai-title">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">AI &amp; real-time</p>
+      <h2 id="ai-title" class="section-title">Interfaces on top of models and live data</h2>
+    </div>
+    <ul class="ai-list">
+      {
+        aiWork.map((item) => (
+          <li class="ai-item" data-reveal>
+            <span class:list={['status', item.status === 'Prototype' ? 'status-proto' : 'status-live']}>
+              <span class="dot" aria-hidden="true" />
+              {item.status}
+            </span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            {'href' in item && item.href && (
+              <a class="link ai-link" href={item.href}>Read the case study</a>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Numbers -->
+  <section class="numbers wrap" aria-label="Key numbers">
+    <dl class="metrics" data-reveal>
+      {
+        metrics.map((m) => (
+          <div class="metric">
+            <dt>
+              {m.label}
+              <span>{m.source}</span>
+            </dt>
+            <dd>{m.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about wrap" aria-labelledby="about-title">
+    <div class="about-grid">
+      <div data-reveal>
+        <p class="eyebrow">About</p>
+        <h2 id="about-title" class="section-title">Five years of owning the whole frontend</h2>
+      </div>
+      <div class="about-text" data-reveal>
+        {about.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact wrap" aria-labelledby="contact-title">
+    <div class="contact-card" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title" class="contact-title">Want to see more, or work together?</h2>
+      <p class="contact-lead">Email is the quickest way to reach me.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={`mailto:${site.email}`}>{site.email}</a>
+        <a class="btn" href={site.linkedin}>LinkedIn</a>
+        <a class="btn" href={site.github}>GitHub</a>
+      </div>
+    </div>
+  </section>
 </Base>
 
 <style>
-  .container {
-    width: 100%;
-    max-width: var(--content-width);
-    margin-left: auto;
-    margin-right: auto;
+  .hero { padding-top: clamp(64px, 10vw, 128px); padding-bottom: clamp(56px, 8vw, 96px); }
+  .hero-status { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .hero-eyebrow { margin-bottom: 14px; }
+  .hero-title {
+    font-size: clamp(36px, 6vw, 68px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    max-width: 16ch;
+    text-wrap: balance;
   }
+  .hero-title .muted { color: var(--fg-faint); }
+  .hero-lead {
+    margin-top: 24px;
+    font-size: clamp(17px, 1.6vw, 20px);
+    color: var(--fg-muted);
+    max-width: 44ch;
+    line-height: 1.55;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+
+  .section-head { display: grid; gap: 8px; margin-bottom: 32px; }
+
+  .work { display: grid; gap: 20px; }
+  .work .section-head { margin-bottom: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+  .ai { margin-top: var(--section); }
+  .ai-list { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 860px) { .ai-list { grid-template-columns: 1fr; } }
+  .ai-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .ai-item h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .ai-item p { font-size: 15px; color: var(--fg-muted); }
+  .ai-link { font-size: 14px; margin-top: auto; padding-top: 4px; align-self: flex-start; }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .status .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .status-live { color: var(--ok); background: var(--ok-soft); }
+  .status-proto { color: var(--warn); background: var(--warn-soft); }
+
+  .numbers { margin-top: var(--section); }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .metric { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 6px; padding: 32px 24px; }
+  .metric + .metric { border-left: 1px solid var(--border); }
+  .metric:first-child { padding-left: 0; }
+  .metric dd { font-size: clamp(30px, 3.6vw, 44px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+  .metric dt { font-size: 14px; color: var(--fg-muted); line-height: 1.4; }
+  .metric dt span { display: block; color: var(--fg-faint); font-size: 13px; }
+  @media (max-width: 760px) {
+    .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metric { padding: 24px 16px; }
+    .metric:nth-child(odd) { padding-left: 0; border-left: 0; }
+    .metric:nth-child(n + 3) { border-top: 1px solid var(--border); }
+  }
+
+  .about { margin-top: var(--section); }
+  .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 48px; align-items: start; }
+  .about-grid .section-title { margin-top: 8px; max-width: 14ch; }
+  .about-text { display: grid; gap: 18px; font-size: 18px; line-height: 1.7; color: var(--fg); }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 20px; } .about-text { font-size: 17px; } }
+
+  .contact { margin-top: var(--section); }
+  .contact-card {
+    padding: clamp(28px, 5vw, 56px);
+    border-radius: calc(var(--radius) + 4px);
+    background:
+      radial-gradient(90% 120% at 100% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+      var(--surface);
+    border: 1px solid var(--border);
+  }
+  .contact-title {
+    margin-top: 10px;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+  .contact-lead { margin-top: 14px; color: var(--fg-muted); font-size: 17px; }
 </style>

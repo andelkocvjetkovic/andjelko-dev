@@ -1,0 +1,32 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>© {year} {site.name}</p>
+    <p class="footer-links">
+      <a href={site.github}>GitHub</a>
+      <a href={site.linkedin}>LinkedIn</a>
+      <a href={site.resumePdf}>Resume</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 1px solid var(--border); margin-top: var(--section); }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 28px;
+    padding-bottom: 40px;
+    font-size: 14px;
+    color: var(--fg-faint);
+  }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: var(--fg-muted); }
+  .footer-links a:hover { color: var(--fg); }
+</style>
