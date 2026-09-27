@@ -1,4 +1,5 @@
 ---
+import ScrollReveal from '../components/ScrollReveal.astro';
 import PisteHeader from '../components/PisteHeader.astro';
 import '../styles/piste-fonts.css';
 import '../styles/piste.css';
@@ -11,8 +12,25 @@ const description = 'I build product interfaces end to end, from design to produ
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Capture the opening viewport once. Browser chrome changes must not resize the hero.
+      (() => {
+        try {
+          const season = localStorage.getItem('piste-season');
+          if (season === 'sun' || season === 'snow') document.documentElement.dataset.season = season;
+        } catch { /* Use snow when storage is unavailable. */ }
+        let width = window.innerWidth;
+        const size = () => document.documentElement.style.setProperty('--opening-height', `${window.innerHeight}px`);
+        size();
+        window.addEventListener('resize', () => {
+          if (window.innerWidth === width) return;
+          width = window.innerWidth;
+          size();
+        });
+      })();
+    </script>
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#F4F6F8" />
+    <meta name="theme-color" content="#CBE8F8" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
@@ -43,5 +61,6 @@ const description = 'I build product interfaces end to end, from design to produ
         <a href={site.linkedin}>LinkedIn</a><a href={site.github}>GitHub</a><a href={site.resumeWeb}>Resume</a>
       </nav>
     </footer>
+    <ScrollReveal />
   </body>
 </html>

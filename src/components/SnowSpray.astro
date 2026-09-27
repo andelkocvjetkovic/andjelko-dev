@@ -1,0 +1,30 @@
+<!-- Small alternating bursts from the board edges, timed to the rider's lean. -->
+<g class="snow-spray" fill="#FFFFFF" stroke="#A3B1C0" stroke-width=".4">
+  {Array.from({ length: 14 }, (_, i) => (
+    <circle class="snow-particle" cx="0" cy="0" r={1.5 + (i % 4) * .55}
+      style={`--spray-x: ${30 + (i % 7) * 5 + Math.floor(i / 7) * 3}px; --spray-y: ${-7 - (i % 5) * 6}px; --particle-delay: ${i * .012}s`}/>
+  ))}
+</g>
+<style>
+  .snow-spray { pointer-events: none; }
+  :global([data-season="sun"]) .snow-spray { fill: #D9BF90; stroke: #A58B60; }
+  .snow-particle {
+    opacity: 0;
+    animation: carve-snow calc(3.5s / 6) ease-out 6 both;
+    animation-delay: calc(var(--ride-start) + var(--particle-delay));
+  }
+  @keyframes carve-snow {
+    0% { opacity: 0; transform: translate(10px, 12px); }
+    6% { opacity: 1; }
+    46%, 49.9% { opacity: 0; transform: translate(var(--spray-x), var(--spray-y)); }
+    50% { opacity: 0; transform: translate(-10px, 12px); }
+    56% { opacity: 1; }
+    96%, 100% { opacity: 0; transform: translate(calc(-1 * var(--spray-x)), var(--spray-y)); }
+  }
+  :global(.paused) .snow-particle { animation-play-state: paused; }
+  :global(.restarting) .snow-particle { animation: none !important; }
+  @media (prefers-reduced-motion: reduce), (scripting: none) {
+    .snow-spray { display: none; }
+    .snow-particle { animation: none; }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+// Sample the same four trails to leave clear corridors through the forest.
+const trails = [
+  [[760,496], [720,580,800,660,740,740], [680,820,760,840,720,900]],
+  [[1040,178], [960,240,900,300,920,380], [940,460,820,540,860,660], [900,780,800,820,840,900]],
+  [[1040,178], [1090,240,1150,290,1130,380], [1110,470,1200,540,1170,660], [1140,780,1210,820,1190,900]],
+  [[1040,178], [1000,260,1080,320,1010,400], [940,480,980,560,1060,660], [1140,760,1120,820,1080,900]],
+];
+const samples: number[][] = [];
+for (const [start, ...segments] of trails) {
+  let [x, y] = start;
+  for (const [a,b,c,d,e,f] of segments) {
+    for (let n=0; n<=30; n++) {
+      const t=n/30, u=1-t;
+      samples.push([u*u*u*x+3*u*u*t*a+3*u*t*t*c+t*t*t*e, u*u*u*y+3*u*u*t*b+3*u*t*t*d+t*t*t*f]);
+    }
+    x=e; y=f;
+  }
+}
+const ridge = [[-240,540],[0,540],[180,380],[320,450],[520,270],[700,400],[860,320],[1040,170],[1220,330],[1440,240],[1750,240]];
+const ground = (x: number) => {
+  const i = ridge.findIndex((point, i) => i>0 && point[0]>=x);
+  const [a,b]=ridge[i-1], [c,d]=ridge[i];
+  return b+(d-b)*(x-a)/(c-a);
+};
+const random = (seed: number) => { const value=Math.sin(seed*127.1+311.7)*43758.5453; return value-Math.floor(value); };
+const trees: {x:number;y:number;scale:number;tone:number}[]=[];
+for (let row=0; row<17; row++) {
+  for (let col=0; col<54; col++) {
+    const seed=row*59+col*17;
+    const x=-220+col*36+(row%2)*18+random(seed)*30-15;
+    const y=245+row*42+random(seed+1000)*34-17;
+    const scale=.38+(y/900)*.58+random(seed+2000)*.32;
+    if (y < ground(x)+58*scale || samples.some(([px,py])=>Math.abs(px-x)<25*scale+14 && py>y-65*scale && py<y+12)) continue;
+    trees.push({x,y,scale,tone:seed%3});
+  }
+}
+trees.sort((a,b)=>a.y-b.y);
+const tones=['#3E7756','#356A4C','#4D835B'];
+---
+<defs>
+  <linearGradient id="forest-copy-fade" gradientUnits="userSpaceOnUse" x1="520" x2="810">
+    <stop offset="0" stop-color="white" stop-opacity=".08"/>
+    <stop offset="1" stop-color="white"/>
+  </linearGradient>
+  <mask id="forest-copy-mask" maskUnits="userSpaceOnUse" x="-10000" y="0" width="20000" height="1000">
+    <rect x="-10000" width="20000" height="1000" fill="url(#forest-copy-fade)"/>
+  </mask>
+</defs>
+<g class="mountain-forest">
+  {trees.map(({x,y,scale,tone}) => <g transform={`translate(${x} ${y}) scale(${scale})`}>
+    <ellipse cy="4" rx="17" ry="4" fill="var(--forest-shadow, #637E91)" opacity=".14"/>
+    <path d="M0 2v-45" stroke="var(--forest-trunk, #65736F)" stroke-width="4"/>
+    <path d="m0-68-13 24h6l-13 21h7L-23-6h46L13-23h7L7-44h6Z" fill="var(--tree-fill, #526F68)" style={`--summer-tree: ${tones[tone]}`}/>
+    <path d="M0-68v62h23L13-23h7L7-44h6Z" fill="var(--forest-shade, #2F5053)" opacity=".32"/>
+    <path class="tree-snow" d="m0-68-10 19 6-2 4 2 4-2 6 2ZM-7-44-9 16 9-3 7 3 7-3 9 3-9-16-5 2-5-2ZM-13-23-7 12 12-3 8 3 8-3 12 3-7-12-6 2-7-2-7 2Z" fill="#F4F8FB"/>
+  </g>)}
+  <g fill="var(--forest-rock, #E7EEF2)"><path d="m782 818 8-7 14 2 5 7h-27ZM1154 474l10-9 13 3 6 8h-29ZM1360 850l13-10 17 4 7 10h-37Z"/></g>
+</g>
+<style>
+  .mountain-forest { mask: url(#forest-copy-mask); }
+  :global([data-season="sun"]) .mountain-forest { --forest-shadow: #294F39; --forest-trunk: #736349; --forest-shade: #244F3B; --forest-rock: #738D75; }
+  :global([data-season="sun"]) [style] { --tree-fill: var(--summer-tree); }
+  :global([data-season="sun"]) .tree-snow { display: none; }
+  @media (max-width: 767px) { .mountain-forest { mask: none; } }
+</style>

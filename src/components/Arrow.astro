@@ -1,0 +1,14 @@
+---
+interface Props { direction?: 'right' | 'up-right'; }
+const { direction = 'right' } = Astro.props;
+---
+<svg class:list={['arrow-icon', { 'arrow-up': direction === 'up-right' }]} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  <path d="M4 12h15M13 5l7 7-7 7" />
+</svg>
+<style>
+  .arrow-icon { display: inline-block; flex-shrink: 0; vertical-align: -.25em; margin-left: .25em; transition: translate .25s ease; }
+  .arrow-up { rotate: -45deg; }
+  :global(a:hover) .arrow-icon { translate: 3px 0; }
+  :global(a:hover) .arrow-up { translate: 2px -2px; }
+  @media (prefers-reduced-motion: reduce) { .arrow-icon { transition: none; } :global(a:hover) .arrow-icon { translate: none; } }
+</style>

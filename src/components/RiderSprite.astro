@@ -1,0 +1,50 @@
+---
+interface Props { summit?: boolean; }
+const { summit = false } = Astro.props;
+---
+<g class="snowboard-rider">
+  <rect x="-15" y="9" width="30" height="4.5" rx="2.25" fill="#14202B"/>
+  <path d="M-7 10 L-4 2 L4 2 L7 10" fill="none" stroke="#33414F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M0 3 L-1 -8" stroke="#F2A33A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M-11 -2 L-2 -6 L10 -3" fill="none" stroke="#F2A33A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="-1" cy="-14" r="4" fill="#14202B"/>
+  <path d="M-5 -15 A4 4 0 0 1 3 -15 Z" fill="#D2372F"/>
+</g>
+{summit ? (
+<g class="bike-rider bike-side" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="#26392F" stroke-width="2.6">
+    <circle cx="-17" cy="9" r="10"/><circle cx="18" cy="9" r="10"/>
+  </g>
+  <g stroke="#64735E" stroke-width=".8"><path d="m-24 2 14 14m-14 0L-10 2M11 2l14 14m-14 0L25 2"/></g>
+  <path d="m-17 9 12-17 8 17h-20L10-5 18 9M3 9 10-5" fill="none" stroke="#D77735" stroke-width="2.5"/>
+  <path d="m-5-8-2-5m-4 0h8M10-5l-2-8h6" fill="none" stroke="#26392F" stroke-width="2"/>
+  <circle cx="3" cy="9" r="2" fill="#26392F"/>
+  <path d="m-7-12 8 9-4 11h7" fill="none" stroke="#26392F" stroke-width="4"/>
+  <path d="m-7-12 6-12" stroke="#CF7135" stroke-width="7"/>
+  <path d="m-1-23 7 5 6 5" fill="none" stroke="#AD6038" stroke-width="3"/>
+  <circle cx="3" cy="-31" r="4.5" fill="#AD6038"/>
+  <path d="M-2-31a5 5 0 0 1 10-1l3 1H-2Z" fill="#E9B956" stroke="#263D32" stroke-width="1"/>
+  <path d="m6-29 2 2" stroke="#26392F" stroke-width="1.5"/>
+</g>
+) : (
+<!-- Viewed from above: the front tire and handlebars point down the trail (+Y). -->
+<g class="bike-rider" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="#243D32" stroke="#182D24" stroke-width="1">
+    <rect x="-3.5" y="-29" width="7" height="20" rx="3.5"/>
+    <rect x="-3.5" y="13" width="7" height="22" rx="3.5"/>
+  </g>
+  <path d="M0-26v13M0 16v16" stroke="#879A8C" stroke-width="1"/>
+  <path d="M0-17-5-6 0 18 5-6 0-17ZM0-17v35" fill="none" stroke="#D77735" stroke-width="2.5"/>
+  <path d="M-10 13H10M-6-12H6" stroke="#243D32" stroke-width="3"/>
+  <path d="m-3-13-6 9 3 7m9-16 6 9-3 7" fill="none" stroke="#253F34" stroke-width="4"/>
+  <path d="m-5-14-3 9 3 7H5l3-7-3-9Z" fill="#CF7135"/>
+  <path d="m-7-5-5 11 2 7M7-5l5 11-2 7" fill="none" stroke="#AD6038" stroke-width="3.5"/>
+  <ellipse cx="0" cy="2" rx="5" ry="6" fill="#E9B956" stroke="#263D32" stroke-width="1.3"/>
+  <path d="M-2-1v5M2-1v5" stroke="#866A36" stroke-width="1"/>
+</g>
+)}
+<style>
+  .bike-rider { display: none; }
+  :global([data-season="sun"]) .snowboard-rider { display: none; }
+  :global([data-season="sun"]) .bike-rider { display: inline; }
+</style>
