@@ -33,6 +33,7 @@ export const featured: Project = {
     alt: 'Kamtřídit web app: a list of nearby collection points next to a map of Prague with clustered recycling locations',
     fit: 'cover',
   },
+  caseStudy: '/work/kamtridit/',
   live: 'https://kamtridit.cz',
 };
 
