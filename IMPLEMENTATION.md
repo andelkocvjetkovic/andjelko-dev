@@ -1,6 +1,6 @@
 # Piste-map implementation
 
-The homepage follows `design/DESIGN.md` and the desktop, tablet, mobile, and mobile-menu HTML mockups. The original design files were left intact.
+The homepage implements the supplied desktop, tablet, mobile, and mobile-menu designs. The temporary design handoff folder has been removed after implementation.
 
 ## Approach
 
