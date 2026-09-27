@@ -1,0 +1,47 @@
+---
+import PisteHeader from '../components/PisteHeader.astro';
+import '../styles/piste-fonts.css';
+import '../styles/piste.css';
+import { site } from '../data/site';
+const title = 'Andjelko Cvjetkovic · Senior Frontend Engineer';
+const description = 'I design and build product interfaces end to end, from design to production. Working across design, frontend and AI.';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#F4F6F8" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={Astro.site} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:url" content={Astro.site} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/images/work/kamtridit.webp', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <PisteHeader />
+    <main id="main"><slot /></main>
+    <footer id="contact" class="contact page-pad">
+      <div class="contact-copy">
+        <p class="eyebrow">Last lift up</p>
+        <h2>Want to see more, or work together?</h2>
+        <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+      </div>
+      <nav class="socials" aria-label="Social and resume links">
+        <a href={site.linkedin}>LinkedIn</a><a href={site.github}>GitHub</a><a href={site.resumeWeb}>Resume</a>
+      </nav>
+    </footer>
+  </body>
+</html>

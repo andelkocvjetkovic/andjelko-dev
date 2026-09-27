@@ -11,6 +11,7 @@ export const site = {
 
 export type Project = {
   slug: string;
+  color: string;
   name: string;
   kind: string;
   summary: string;
@@ -23,6 +24,7 @@ export type Project = {
 
 export const featured: Project = {
   slug: 'kamtridit',
+  color: '#2E9E5B',
   name: 'Kamtřídit',
   kind: 'Nationwide recycling map for Czechia',
   summary:
@@ -40,6 +42,7 @@ export const featured: Project = {
 export const projects: readonly Project[] = [
   {
     slug: 'tabletap',
+    color: '#1F5FBF',
     name: 'TableTap',
     kind: 'Restaurant ordering and operations platform',
     summary:
@@ -55,6 +58,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'cistou-prirodou',
+    color: '#7A4FD0',
     name: 'Čistou přírodou',
     kind: 'National hiking and cycling guide',
     summary:
@@ -69,6 +73,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'coffeebreak',
+    color: '#8A5A2E',
     name: 'CoffeeBreak',
     kind: 'Opportunity and pipeline management platform',
     summary:
@@ -83,6 +88,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'bh-passport',
+    color: '#0F8A8A',
     name: 'BH-Passport',
     kind: 'Travel agency website',
     summary: 'Rebuilt from WordPress as Next.js with a custom Sanity CMS the agency edits on its own. Lighthouse 97.',
@@ -124,4 +130,13 @@ export const metrics = [
 export const about = [
   'I’ve spent five years as the only frontend engineer on most of my projects, so I’m used to owning everything from architecture to the last pixel. Lately that has grown into design and backend work too: I design features in Figma, build them, and write the API code when a feature needs it.',
   'AI is part of both what I build and how I build it. I ship features on top of vision LLMs, and I work daily with Claude Code, Codex and Figma MCP in a design-to-code loop.',
+] as const;
+
+/** Approved piste-map order and homepage copy. */
+export const runs = [
+  { ...featured, number: '01', summary: 'A nationwide recycling map for Czechia. I rebuilt it so 33,000+ collection points load fast: only the visible area loads, clusters split on click, and the list is virtualized.', image: { src: '/images/kamtridit/clusters.webp', alt: 'Kamtřídit map with clustered recycling points' } },
+  { ...projects.find(p => p.slug === 'cistou-prirodou')!, number: '02', summary: 'A complete redesign of the national hiking and cycling guide: 73 routes, GPX ingestion and interactive waypoints. ~12,000 weekly visitors in season.' },
+  { ...projects.find(p => p.slug === 'coffeebreak')!, number: '03', summary: 'Redesigned in Figma and built, plus the new TypeScript backend.' },
+  { ...projects.find(p => p.slug === 'tabletap')!, number: '04', summary: 'AI menu import from a photo, admin panel, analytics and the landing site.' },
+  { ...projects.find(p => p.slug === 'bh-passport')!, number: '05', summary: 'Next.js and Sanity CMS, rebuilt from WordPress. Lighthouse 97.' },
 ] as const;

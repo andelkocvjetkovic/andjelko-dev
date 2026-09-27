@@ -5,10 +5,12 @@ Personal portfolio of Andjelko Cvjetkovic. Built with [Astro](https://astro.buil
 ## Structure
 
 - `src/pages/index.astro`: home page
-- `src/pages/work/tabletap.astro`: TableTap case study
-- `src/data/site.ts`: all home page content (projects, AI work, metrics, about)
+- `src/pages/work/kamtridit.astro`: Kamtřídit case study
+- `src/data/site.ts`: project data, run colors, and homepage project copy
 - `public/resume/index.html`: resume, web version (andjelko.dev/resume)
 - `public/Andjelko-Cvjetkovic-Resume.pdf`: resume PDF
+
+See [IMPLEMENTATION.md](./IMPLEMENTATION.md) for design decisions, animation behavior, validation, and unspecified interactions.
 
 ## Commands
 

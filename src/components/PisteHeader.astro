@@ -1,0 +1,128 @@
+---
+import { site, featured } from '../data/site';
+const links = [
+  { label: 'Runs', href: '#runs' }, { label: 'About', href: '#about' },
+  { label: 'Resume', href: site.resumeWeb }, { label: 'Contact', href: '#contact' },
+];
+---
+<header class="piste-header page-pad">
+  <a class="brand" href="/">{site.name}</a>
+  <nav class="desktop-nav" aria-label="Main">{links.map(link => <a href={link.href}>{link.label}</a>)}</nav>
+  <button class="menu-trigger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+  <noscript><nav class="fallback-nav" aria-label="Main">{links.map(link => <a href={link.href}>{link.label}</a>)}</nav></noscript>
+</header>
+<dialog id="mobile-menu" aria-label="Main menu">
+  <div class="menu-content">
+    <div class="menu-top">
+      <a class="brand" href="/">{site.name}</a>
+      <button type="button" class="menu-close" aria-label="Close menu" autofocus>×</button>
+    </div>
+    <nav class="menu-nav" aria-label="Mobile main">
+      {links.map((link, i) => <a href={link.href} style={`--order: ${i + 1}`}><span>0{i + 1}</span>{link.label}</a>)}
+    </nav>
+    <div class="menu-contact">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <div class="socials"><a href={site.linkedin}>LinkedIn</a><a href={site.github}>GitHub</a></div>
+    </div>
+    <svg class="menu-mountain" aria-hidden="true" viewBox="0 0 390 200">
+      <polygon points="0,120 70,70 130,105 210,30 280,90 330,60 390,95 390,200 0,200" fill="#1C2B39"/>
+      <polygon points="210,30 196,46 205,44 212,52 220,44 228,48" fill="#F4F6F8" fill-opacity="0.85"/>
+      <polygon points="0,160 90,115 170,150 260,100 390,150 390,200 0,200" fill="#223344"/>
+      <path d="M210 34 C 200 70, 230 100, 215 140 S 205 180, 220 200" fill="none" stroke={featured.color} stroke-width="3" stroke-linecap="round" stroke-dasharray="1" pathLength="1" class="menu-run"/>
+      <g fill="#F4F6F8" fill-opacity="0.6">
+        <circle class="menu-flake" cx="40" cy="0" r="1.5"/>
+        <circle class="menu-flake" cx="150" cy="0" r="2" style="animation-delay: -4s"/>
+        <circle class="menu-flake" cx="300" cy="0" r="1.5" style="animation-delay: -7s"/>
+      </g>
+    </svg>
+  </div>
+</dialog>
+<script>
+  const trigger = document.querySelector<HTMLButtonElement>('.menu-trigger')!;
+  const menu = document.querySelector<HTMLDialogElement>('#mobile-menu')!;
+  let scrollY = 0;
+  const notify = () => document.dispatchEvent(new Event('piste-menu-change'));
+  trigger.addEventListener('click', () => {
+    scrollY = window.scrollY;
+    document.body.style.top = `-${scrollY}px`;
+    document.body.classList.add('menu-open');
+    menu.showModal();
+    trigger.setAttribute('aria-expanded', 'true');
+    notify();
+  });
+  menu.addEventListener('close', () => {
+    document.body.classList.remove('menu-open');
+    document.body.style.top = '';
+    window.scrollTo({ top: scrollY, behavior: 'instant' });
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.focus({ preventScroll: true });
+    notify();
+  });
+  menu.querySelector('.menu-close')?.addEventListener('click', () => menu.close());
+  menu.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const items = Array.from(menu.querySelectorAll<HTMLElement>('a[href], button'));
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+  menu.querySelectorAll<HTMLAnchorElement>('a').forEach(link => {
+    link.addEventListener('click', event => {
+      const hash = link.getAttribute('href');
+      if (hash?.startsWith('#')) {
+        event.preventDefault();
+        menu.addEventListener('close', () => {
+          document.querySelector(hash)?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+          history.pushState(null, '', hash);
+        }, { once: true });
+      }
+      menu.close();
+    });
+  });
+  matchMedia('(min-width: 768px)').addEventListener('change', event => {
+    if (event.matches && menu.open) menu.close();
+  });
+</script>
+<style>
+  .piste-header { position: absolute; top: 0; left: 0; width: 100%; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding-block: 28px; gap: 20px; }
+  .brand { font: 700 20px var(--display); text-decoration: none; }
+  .desktop-nav { display: flex; gap: 32px; font: 13px var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+  .desktop-nav a { text-decoration: none; padding-block: 10px; margin-block: -10px; }
+  .menu-trigger { display: none; }
+  dialog { padding: 0; border: 0; margin: 0; max-width: none; max-height: none; width: 100%; height: 100%; height: 100dvh; background: var(--ink); color: var(--bg); overflow-y: auto; overscroll-behavior: contain; }
+  dialog::backdrop { background: var(--ink); }
+  dialog[open] { animation: menu-fade .2s ease-out both; }
+  .menu-content { min-height: 100%; display: flex; flex-direction: column; }
+  .menu-top { display: flex; align-items: center; justify-content: space-between; padding: 20px; }
+  .menu-top .brand { font-size: 18px; }
+  .menu-close { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; color: inherit; border: 0; background: none; font: 28px/1 var(--body); cursor: pointer; }
+  .menu-nav { display: flex; flex-direction: column; padding: 24px 20px 0; border-top: 1px solid #2A3A4A; }
+  .menu-nav a { display: flex; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid #2A3A4A; text-decoration: none; font: 700 44px/1 var(--display); letter-spacing: -.03em; }
+  dialog[open] .menu-nav a { animation: menu-rise .35s ease-out both; animation-delay: calc(var(--order) * 60ms); }
+  .menu-nav span { color: #9FB0C2; font: 13px var(--mono); }
+  .menu-contact { display: flex; flex-direction: column; gap: 14px; padding: 32px 20px 0; z-index: 1; font-size: 17px; font-weight: 500; }
+  .menu-contact .socials { gap: 22px; color: #C3CFDB; font-size: 12px; }
+  .menu-mountain { display: block; width: 100%; flex-shrink: 0; margin-top: auto; }
+  dialog[open] .menu-run { animation: menu-draw 1.2s ease-out both; }
+  .menu-flake { animation: menu-snow 10s linear infinite; }
+  @keyframes menu-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes menu-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes menu-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes menu-snow { from { transform: translateY(-10px); } to { transform: translate(20px, 210px); } }
+  @media (max-width: 1023px) { .desktop-nav { gap: 24px; } }
+  @media (max-width: 767px) {
+    .piste-header { position: fixed; padding-block: 20px; background: var(--bg); border-bottom: 1px solid var(--mountain-front); }
+    .brand { font-size: 18px; }
+    .desktop-nav { display: none; }
+    .menu-trigger { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 44px; height: 44px; margin-right: -10px; background: none; border: 0; cursor: pointer; }
+    .menu-trigger span { width: 22px; height: 2px; background: var(--ink); border-radius: 1px; }
+  }
+  @media (prefers-reduced-motion: reduce) { dialog[open], dialog[open] .menu-nav a, dialog[open] .menu-run, .menu-flake { animation: none; } .menu-flake { display: none; } }
+  @media (scripting: none) { .menu-trigger { display: none; } .piste-header { flex-wrap: wrap; } .fallback-nav { display: flex; gap: 20px; font-size: 13px; } }
+</style>

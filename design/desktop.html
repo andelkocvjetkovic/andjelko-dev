@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<meta name="robots" content="noindex, nofollow">
+<title>Piste map · desktop (1440 px)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&amp;family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F8}
+a{color:#14202B}a:hover{color:#1F5FBF}
+@keyframes snow{0%{transform:translate(0,-40px);opacity:0}10%{opacity:0.9}100%{transform:translate(30px,900px);opacity:0}}
+@keyframes lean{0%,100%{transform:rotate(-14deg)}17%{transform:rotate(12deg)}33%{transform:rotate(-12deg)}50%{transform:rotate(14deg)}67%{transform:rotate(-12deg)}83%{transform:rotate(12deg)}}
+@keyframes cabin{0%{offset-distance:0%;opacity:0}5%{opacity:1}95%{opacity:1}100%{offset-distance:100%;opacity:0}}
+.lean{animation:lean 3.5s ease-in-out infinite;transform-box:view-box;transform-origin:0 12px}
+.flake{animation:snow 11s linear infinite}
+.cabin{offset-path:path('M1390 872 L1150 262');offset-rotate:0deg;animation:cabin 15s linear infinite}
+.tour{animation-duration:22.5s;animation-iteration-count:1;animation-fill-mode:forwards;animation-timing-function:linear}
+.pop{transform-box:fill-box;transform-origin:50% 100%}
+.run-tt{stroke-dasharray:1 1;animation-name:draw-tt}
+@keyframes draw-tt{0%,13.33%{stroke-dashoffset:1}28.89%{stroke-dashoffset:0.07}33.33%,100%{stroke-dashoffset:0}}
+.sign-tt{animation-name:sign-tt}
+@keyframes sign-tt{0%,14.67%{opacity:0}17.33%,100%{opacity:1}}
+.rider-tt{offset-path:path('M760 496 C 720 580, 800 660, 740 740 S 760 840, 720 900');offset-rotate:0deg;animation-name:ride-tt}
+.rider-tt .lean{animation-delay:3s}
+@keyframes ride-tt{0%,13.33%{offset-distance:0%;opacity:0}14.67%{opacity:1}28.89%{offset-distance:93%;opacity:1}32.44%{offset-distance:93%;opacity:1}33.33%,100%{offset-distance:93%;opacity:0}}
+.fin-tt{animation-name:fin-tt}
+@keyframes fin-tt{0%,28.89%{opacity:0;transform:scale(0.4)}30.00%,32.44%{opacity:1;transform:scale(1)}33.33%,100%{opacity:0;transform:scale(0.4)}}
+.run-cb{stroke-dasharray:1 1;animation-name:draw-cb}
+@keyframes draw-cb{0%,33.33%{stroke-dashoffset:1}48.89%{stroke-dashoffset:0.07}53.33%,100%{stroke-dashoffset:0}}
+.sign-cb{animation-name:sign-cb}
+@keyframes sign-cb{0%,34.67%{opacity:0}37.33%,100%{opacity:1}}
+.rider-cb{offset-path:path('M1040 178 C 960 240, 900 300, 920 380 S 820 540, 860 660 S 800 820, 840 900');offset-rotate:0deg;animation-name:ride-cb}
+.rider-cb .lean{animation-delay:7.5s}
+@keyframes ride-cb{0%,33.33%{offset-distance:0%;opacity:0}34.67%{opacity:1}48.89%{offset-distance:93%;opacity:1}52.44%{offset-distance:93%;opacity:1}53.33%,100%{offset-distance:93%;opacity:0}}
+.fin-cb{animation-name:fin-cb}
+@keyframes fin-cb{0%,48.89%{opacity:0;transform:scale(0.4)}50.00%,52.44%{opacity:1;transform:scale(1)}53.33%,100%{opacity:0;transform:scale(0.4)}}
+.run-cp{stroke-dasharray:1 1;animation-name:draw-cp}
+@keyframes draw-cp{0%,53.33%{stroke-dashoffset:1}68.89%{stroke-dashoffset:0.07}73.33%,100%{stroke-dashoffset:0}}
+.sign-cp{animation-name:sign-cp}
+@keyframes sign-cp{0%,54.67%{opacity:0}57.33%,100%{opacity:1}}
+.rider-cp{offset-path:path('M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900');offset-rotate:0deg;animation-name:ride-cp}
+.rider-cp .lean{animation-delay:12s}
+@keyframes ride-cp{0%,53.33%{offset-distance:0%;opacity:0}54.67%{opacity:1}68.89%{offset-distance:93%;opacity:1}72.44%{offset-distance:93%;opacity:1}73.33%,100%{offset-distance:93%;opacity:0}}
+.fin-cp{animation-name:fin-cp}
+@keyframes fin-cp{0%,68.89%{opacity:0;transform:scale(0.4)}70.00%,72.44%{opacity:1;transform:scale(1)}73.33%,100%{opacity:0;transform:scale(0.4)}}
+.run-kt{stroke-dasharray:1 1;animation-name:draw-kt}
+@keyframes draw-kt{0%,73.33%{stroke-dashoffset:1}88.89%{stroke-dashoffset:0.07}93.33%,100%{stroke-dashoffset:0}}
+.sign-kt{animation-name:sign-kt}
+@keyframes sign-kt{0%,74.67%{opacity:0}77.33%,100%{opacity:1}}
+.rider-kt{offset-path:path('M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900');offset-rotate:0deg;animation-name:ride-kt}
+.rider-kt .lean{animation-delay:16.5s}
+@keyframes ride-kt{0%,73.33%{offset-distance:0%;opacity:0}74.67%{opacity:1}88.89%{offset-distance:93%;opacity:1}92.44%{offset-distance:93%;opacity:1}93.33%,100%{offset-distance:93%;opacity:0}}
+.fin-kt{animation-name:fin-kt}
+@keyframes fin-kt{0%,88.89%{opacity:0;transform:scale(0.4)}90.00%,92.44%{opacity:1;transform:scale(1)}93.33%,100%{opacity:0;transform:scale(0.4)}}
+.summit{animation-name:summit}.summit .lean{animation:none}
+@keyframes summit{0%{opacity:0}1.33%,12.00%{opacity:1}13.33%,93.33%{opacity:0}95.11%,100%{opacity:1}}
+.hello{animation-name:hello}
+@keyframes hello{0%,1.78%{opacity:0;transform:scale(0.4)}4.00%,11.11%{opacity:1;transform:scale(1)}12.89%,95.56%{opacity:0;transform:scale(0.4)}97.78%,100%{opacity:1;transform:scale(1)}}
+.bye{animation-name:bye}.hi{animation-name:hi}
+@keyframes hi{0%,13.33%{opacity:1}13.38%,100%{opacity:0}}
+@keyframes bye{0%,13.33%{opacity:0}13.38%,100%{opacity:1}}
+.again{animation-name:again}
+@keyframes again{0%,97.33%{opacity:0;visibility:hidden}99.11%,100%{opacity:1;visibility:visible}}
+@media (prefers-reduced-motion: reduce){.tour,.lean,.flake,.cabin{animation:none}.flake{opacity:0}[class^="rider-"],[class^="fin-"],.hi,.again{opacity:0}}
+</style>
+</head>
+<body>
+<div style="width: 1440px; box-sizing: border-box; background: #F4F6F8; color: #14202B; font-family: 'Hanken Grotesk', sans-serif; display: flex; flex-direction: column; position: relative; overflow: hidden">
+
+  <header style="position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 28px 72px">
+    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px">Andjelko Cvjetkovic</span>
+    <nav aria-label="Main" style="display: flex; gap: 32px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em">
+      <a href="#runs" style="text-decoration: none">Runs</a>
+      <a href="#about" style="text-decoration: none">About</a>
+      <a href="#resume" style="text-decoration: none">Resume</a>
+      <a href="#contact" style="text-decoration: none">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero: the mountain -->
+  <section style="position: relative; height: 900px; flex-shrink: 0">
+    <svg aria-hidden="true" width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; inset: 0">
+      <polygon points="0,540 180,380 320,450 520,270 700,400 860,320 1040,170 1220,330 1440,240 1440,900 0,900" fill="#DCE3EB"/>
+      <polygon points="1040,170 1000,215 1022,208 1040,226 1062,206 1085,214" fill="#FFFFFF"/>
+      <polygon points="520,270 492,300 510,296 526,312 540,296 556,302" fill="#FFFFFF"/>
+      <polygon points="1440,240 1405,268 1420,266 1440,280" fill="#FFFFFF"/>
+      <polygon points="0,660 240,540 460,600 760,490 880,560 1000,400 1180,520 1440,440 1440,900 0,900" fill="#C9D4E0"/>
+      <polygon points="760,490 734,516 750,512 766,526 780,512 796,518" fill="#FFFFFF"/>
+      <!-- lift: base station, cable, towers, cabins -->
+      <path id="lift-line" d="M1390 872 L1150 262" fill="none" stroke="#14202B" stroke-width="1.5" stroke-opacity="0.7"/>
+      <g stroke="#14202B" stroke-opacity="0.7" stroke-width="2.5" stroke-linecap="round">
+        <path d="M1330 718 V753 M1324 718 H1336"/>
+        <path d="M1270 565 V600 M1264 565 H1276"/>
+        <path d="M1210 413 V448 M1204 413 H1216"/>
+      </g>
+      <rect x="1376" y="866" width="30" height="16" rx="2" fill="#14202B"/>
+      <rect x="1136" y="254" width="28" height="14" rx="2" fill="#14202B"/>
+      <rect class="cabin" x="-7" y="-5" width="14" height="10" rx="2" fill="#14202B"/>
+      <rect class="cabin" style="animation-delay: -5s" x="-7" y="-5" width="14" height="10" rx="2" fill="#14202B"/>
+      <rect class="cabin" style="animation-delay: -10s" x="-7" y="-5" width="14" height="10" rx="2" fill="#14202B"/>
+      <text x="1176" y="250" font-family="JetBrains Mono" font-size="12" fill="#14202B" fill-opacity="0.75">LIFT · FIGMA → PRODUCTION</text>
+      <!-- runs: drawn one by one as the rider goes down them -->
+      <path class="run-tt tour" d="M760 496 C 720 580, 800 660, 740 740 S 760 840, 720 900" pathLength="1" fill="none" stroke="#1F5FBF" stroke-width="4" stroke-linecap="round"/>
+      <path class="run-cb tour" d="M1040 178 C 960 240, 900 300, 920 380 S 820 540, 860 660 S 800 820, 840 900" pathLength="1" fill="none" stroke="#8A5A2E" stroke-width="4" stroke-linecap="round"/>
+      <path class="run-cp tour" d="M1040 178 C 1090 240, 1150 290, 1130 380 S 1200 540, 1170 660 S 1210 820, 1190 900" pathLength="1" fill="none" stroke="#7A4FD0" stroke-width="4" stroke-linecap="round"/>
+      <path class="run-kt tour" d="M1040 178 C 1000 260, 1080 320, 1010 400 S 980 560, 1060 660 S 1120 820, 1080 900" pathLength="1" fill="none" stroke="#2E9E5B" stroke-width="4" stroke-linecap="round"/>
+      <g font-family="JetBrains Mono" font-size="12">
+        <g class="sign-tt tour"><rect x="692" y="728" width="96" height="24" rx="3" fill="#1F5FBF"/><text x="702" y="744" fill="#FFFFFF">04 TableTap</text></g>
+        <g class="sign-cb tour"><rect x="804" y="648" width="112" height="24" rx="3" fill="#8A5A2E"/><text x="814" y="664" fill="#FFFFFF">03 CoffeeBreak</text></g>
+        <g class="sign-cp tour"><rect x="1095" y="648" width="150" height="24" rx="3" fill="#7A4FD0"/><text x="1105" y="664" fill="#FFFFFF">02 Čistou přírodou</text></g>
+        <g class="sign-kt tour"><rect x="950" y="388" width="120" height="24" rx="3" fill="#2E9E5B"/><text x="960" y="404" fill="#FFFFFF">01 Kamtřídit</text></g>
+      </g>
+      <g class="rider-tt tour">
+          <g class="lean">
+            <ellipse cx="0" cy="15" rx="15" ry="2.5" fill="#14202B" fill-opacity="0.18"/>
+            <rect x="-15" y="9" width="30" height="4.5" rx="2.25" fill="#14202B"/>
+            <path d="M-7 10 L-4 2 L4 2 L7 10" fill="none" stroke="#33414F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M0 3 L-1 -8" stroke="#F2A33A" stroke-width="6" stroke-linecap="round"/>
+            <path d="M-11 -2 L-2 -6 L10 -3" fill="none" stroke="#F2A33A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="-1" cy="-14" r="4" fill="#14202B"/>
+            <path d="M-5 -15 A4 4 0 0 1 3 -15 Z" fill="#D2372F"/>
+          </g>
+      </g>
+      <g class="rider-cb tour">
+          <g class="lean">
+            <ellipse cx="0" cy="15" rx="15" ry="2.5" fill="#14202B" fill-opacity="0.18"/>
+            <rect x="-15" y="9" width="30" height="4.5" rx="2.25" fill="#14202B"/>
+            <path d="M-7 10 L-4 2 L4 2 L7 10" fill="none" stroke="#33414F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M0 3 L-1 -8" stroke="#F2A33A" stroke-width="6" stroke-linecap="round"/>
+            <path d="M-11 -2 L-2 -6 L10 -3" fill="none" stroke="#F2A33A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="-1" cy="-14" r="4" fill="#14202B"/>
+            <path d="M-5 -15 A4 4 0 0 1 3 -15 Z" fill="#D2372F"/>
+          </g>
+      </g>
+      <g class="rider-cp tour">
+          <g class="lean">
+            <ellipse cx="0" cy="15" rx="15" ry="2.5" fill="#14202B" fill-opacity="0.18"/>
+            <rect x="-15" y="9" width="30" height="4.5" rx="2.25" fill="#14202B"/>
+            <path d="M-7 10 L-4 2 L4 2 L7 10" fill="none" stroke="#33414F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M0 3 L-1 -8" stroke="#F2A33A" stroke-width="6" stroke-linecap="round"/>
+            <path d="M-11 -2 L-2 -6 L10 -3" fill="none" stroke="#F2A33A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="-1" cy="-14" r="4" fill="#14202B"/>
+            <path d="M-5 -15 A4 4 0 0 1 3 -15 Z" fill="#D2372F"/>
+          </g>
+      </g>
+      <g class="rider-kt tour">
+          <g class="lean">
+            <ellipse cx="0" cy="15" rx="15" ry="2.5" fill="#14202B" fill-opacity="0.18"/>
+            <rect x="-15" y="9" width="30" height="4.5" rx="2.25" fill="#14202B"/>
+            <path d="M-7 10 L-4 2 L4 2 L7 10" fill="none" stroke="#33414F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M0 3 L-1 -8" stroke="#F2A33A" stroke-width="6" stroke-linecap="round"/>
+            <path d="M-11 -2 L-2 -6 L10 -3" fill="none" stroke="#F2A33A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="-1" cy="-14" r="4" fill="#14202B"/>
+            <path d="M-5 -15 A4 4 0 0 1 3 -15 Z" fill="#D2372F"/>
+          </g>
+      </g>
+      <g font-family="JetBrains Mono" font-size="12" font-weight="500">
+        <g class="fin-tt pop tour"><path d="M731 853 L725 844 L737 844 Z" fill="#14202B"/><rect x="703" y="820" width="56" height="24" rx="12" fill="#14202B"/><text x="731" y="836" text-anchor="middle" fill="#FFFFFF">Done!</text></g>
+        <g class="fin-cb pop tour"><path d="M832 826 L826 817 L838 817 Z" fill="#14202B"/><rect x="796.5" y="793" width="71" height="24" rx="12" fill="#14202B"/><text x="832" y="809" text-anchor="middle" fill="#FFFFFF">Finish!</text></g>
+        <g class="fin-cp pop tour"><path d="M1191 827 L1185 818 L1197 818 Z" fill="#14202B"/><rect x="1144.5" y="794" width="93" height="24" rx="12" fill="#14202B"/><text x="1191" y="810" text-anchor="middle" fill="#FFFFFF">Completed!</text></g>
+        <g class="fin-kt pop tour"><path d="M1103 830 L1097 821 L1109 821 Z" fill="#14202B"/><rect x="1064" y="797" width="78" height="24" rx="12" fill="#14202B"/><text x="1103" y="813" text-anchor="middle" fill="#FFFFFF">Shipped!</text></g>
+      </g>
+      <!-- me, at the top: says hi, rides every run, comes back up -->
+      <clipPath id="avatar-clip"><circle cx="1040" cy="92" r="28"/></clipPath>
+      <g class="summit tour">
+        <g transform="translate(1040 160)">
+          <g class="lean">
+            <ellipse cx="0" cy="15" rx="15" ry="2.5" fill="#14202B" fill-opacity="0.18"/>
+            <rect x="-15" y="9" width="30" height="4.5" rx="2.25" fill="#14202B"/>
+            <path d="M-7 10 L-4 2 L4 2 L7 10" fill="none" stroke="#33414F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M0 3 L-1 -8" stroke="#F2A33A" stroke-width="6" stroke-linecap="round"/>
+            <path d="M-11 -2 L-2 -6 L10 -3" fill="none" stroke="#F2A33A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="-1" cy="-14" r="4" fill="#14202B"/>
+            <path d="M-5 -15 A4 4 0 0 1 3 -15 Z" fill="#D2372F"/>
+          </g>
+        </g>
+      </g>
+      <g class="hello pop tour">
+        <path d="M1040 136 L1033 124 L1047 124 Z" fill="#14202B"/>
+        <circle cx="1040" cy="92" r="32" fill="#14202B"/>
+        <image href="../public/avatar.jpg" x="1012" y="64" width="56" height="56" clip-path="url(#avatar-clip)" preserveAspectRatio="xMidYMid slice"/>
+        <g font-family="JetBrains Mono" font-size="12">
+          <rect x="1080" y="80" width="120" height="24" rx="3" fill="#14202B"/>
+          <text class="hi tour" x="1090" y="96" fill="#FFFFFF">Hey, it’s me</text>
+          <text class="bye tour" x="1090" y="96" fill="#FFFFFF">See the runs ↓</text>
+        </g>
+      </g>
+      <!-- snow -->
+      <g fill="#FFFFFF" stroke="#A3B1C0" stroke-width="0.8">
+        <circle class="flake" cx="683" cy="0" r="2" style="animation-duration: 11.4s; animation-delay: -0.7s"/>
+        <circle class="flake" cx="1117" cy="0" r="1.5" style="animation-duration: 11.2s; animation-delay: -0.9s"/>
+        <circle class="flake" cx="1059" cy="0" r="2" style="animation-duration: 9.2s; animation-delay: -6.5s"/>
+        <circle class="flake" cx="163" cy="0" r="2" style="animation-duration: 9.5s; animation-delay: -6.4s"/>
+        <circle class="flake" cx="1178" cy="0" r="1.5" style="animation-duration: 14.7s; animation-delay: -9.5s"/>
+        <circle class="flake" cx="1213" cy="0" r="1.5" style="animation-duration: 12.5s; animation-delay: -6.0s"/>
+        <circle class="flake" cx="472" cy="0" r="1.5" style="animation-duration: 12.3s; animation-delay: -2.0s"/>
+        <circle class="flake" cx="878" cy="0" r="2" style="animation-duration: 12.2s; animation-delay: -8.6s"/>
+        <circle class="flake" cx="1167" cy="0" r="2" style="animation-duration: 9.6s; animation-delay: -8.6s"/>
+        <circle class="flake" cx="404" cy="0" r="2.5" style="animation-duration: 9.6s; animation-delay: -10.7s"/>
+        <circle class="flake" cx="1175" cy="0" r="1.5" style="animation-duration: 12.7s; animation-delay: -7.4s"/>
+        <circle class="flake" cx="1108" cy="0" r="3" style="animation-duration: 13.7s; animation-delay: -7.0s"/>
+        <circle class="flake" cx="948" cy="0" r="2.5" style="animation-duration: 10.8s; animation-delay: -11.9s"/>
+        <circle class="flake" cx="519" cy="0" r="1.5" style="animation-duration: 12.4s; animation-delay: -7.9s"/>
+        <circle class="flake" cx="723" cy="0" r="3" style="animation-duration: 10.7s; animation-delay: -14.7s"/>
+        <circle class="flake" cx="261" cy="0" r="3.5" style="animation-duration: 11.5s; animation-delay: -11.4s"/>
+        <circle class="flake" cx="331" cy="0" r="3" style="animation-duration: 11.5s; animation-delay: -14.4s"/>
+        <circle class="flake" cx="178" cy="0" r="3.5" style="animation-duration: 12.4s; animation-delay: -13.1s"/>
+        <circle class="flake" cx="662" cy="0" r="2.5" style="animation-duration: 13.2s; animation-delay: -8.9s"/>
+        <circle class="flake" cx="1207" cy="0" r="3" style="animation-duration: 9.4s; animation-delay: -1.4s"/>
+        <circle class="flake" cx="572" cy="0" r="3" style="animation-duration: 13.2s; animation-delay: -1.0s"/>
+        <circle class="flake" cx="654" cy="0" r="3.5" style="animation-duration: 15.0s; animation-delay: -12.3s"/>
+        <circle class="flake" cx="602" cy="0" r="3" style="animation-duration: 14.3s; animation-delay: -5.2s"/>
+        <circle class="flake" cx="965" cy="0" r="2.5" style="animation-duration: 10.0s; animation-delay: -1.8s"/>
+        <circle class="flake" cx="140" cy="0" r="2" style="animation-duration: 13.6s; animation-delay: -1.9s"/>
+        <circle class="flake" cx="527" cy="0" r="3" style="animation-duration: 11.3s; animation-delay: -13.1s"/>
+        <circle class="flake" cx="185" cy="0" r="2" style="animation-duration: 11.7s; animation-delay: -8.2s"/>
+        <circle class="flake" cx="300" cy="0" r="3" style="animation-duration: 14.2s; animation-delay: -4.2s"/>
+        <circle class="flake" cx="870" cy="0" r="2.5" style="animation-duration: 13.1s; animation-delay: -5.7s"/>
+        <circle class="flake" cx="492" cy="0" r="2" style="animation-duration: 9.5s; animation-delay: -2.3s"/>
+        <circle class="flake" cx="1368" cy="0" r="2" style="animation-duration: 9.1s; animation-delay: -12.5s"/>
+        <circle class="flake" cx="393" cy="0" r="2.5" style="animation-duration: 10.7s; animation-delay: -2.2s"/>
+        <circle class="flake" cx="1114" cy="0" r="2.5" style="animation-duration: 12.7s; animation-delay: -4.8s"/>
+        <circle class="flake" cx="277" cy="0" r="3.5" style="animation-duration: 14.7s; animation-delay: -9.8s"/>
+        <circle class="flake" cx="130" cy="0" r="3" style="animation-duration: 14.4s; animation-delay: -11.7s"/>
+        <circle class="flake" cx="1413" cy="0" r="3.5" style="animation-duration: 11.4s; animation-delay: -6.0s"/>
+        <circle class="flake" cx="232" cy="0" r="3" style="animation-duration: 12.8s; animation-delay: -0.9s"/>
+        <circle class="flake" cx="157" cy="0" r="2" style="animation-duration: 11.6s; animation-delay: -1.6s"/>
+        <circle class="flake" cx="1250" cy="0" r="1.5" style="animation-duration: 9.6s; animation-delay: -8.5s"/>
+        <circle class="flake" cx="1118" cy="0" r="1.5" style="animation-duration: 14.7s; animation-delay: -9.2s"/>
+        <circle class="flake" cx="164" cy="0" r="2" style="animation-duration: 12.7s; animation-delay: -2.2s"/>
+        <circle class="flake" cx="536" cy="0" r="2.5" style="animation-duration: 12.6s; animation-delay: -7.1s"/>
+        <circle class="flake" cx="256" cy="0" r="3" style="animation-duration: 15.0s; animation-delay: -7.0s"/>
+        <circle class="flake" cx="1010" cy="0" r="2.5" style="animation-duration: 9.5s; animation-delay: -1.5s"/>
+      </g>
+    </svg>
+
+    <a class="again tour" href="#top" onclick="replay(event)" style="position: absolute; z-index: 3; left: 1080px; top: 114px; display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; background: #F4F6F8; border: 1.5px solid #14202B; border-radius: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; text-decoration: none; color: #14202B">↻ Ride again</a>
+    <div style="position: relative; z-index: 2; padding: 170px 72px 0; max-width: 700px; display: flex; flex-direction: column; gap: 24px">
+      <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: #4B5B6B">Senior Frontend Engineer · Remote · EU work authorization · CET</p>
+      <h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 72px; line-height: 0.98; letter-spacing: -0.035em">I design and build product interfaces end to end, from Figma to production.</h1>
+      <p style="margin: 0; font-size: 19px; line-height: 1.55; color: #33414F; max-width: 520px">Working across design, frontend and AI, including the AI features and backend work a product needs.</p>
+      <div style="display: flex; gap: 10px">
+        <a href="#resume" style="display: inline-flex; align-items: center; height: 46px; padding: 0 20px; background: #14202B; color: #F4F6F8; border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 15px">Resume</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legend -->
+  <div style="margin: 0 72px; padding: 18px 0; border-bottom: 1px solid #C9D4E0; display: flex; gap: 36px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #4B5B6B">
+    <span style="color: #14202B">The runs</span>
+    <span style="display: flex; align-items: center; gap: 10px"><span style="width: 28px; height: 4px; background: #2E9E5B; border-radius: 2px"></span>01 Kamtřídit</span>
+    <span style="display: flex; align-items: center; gap: 10px"><span style="width: 28px; height: 4px; background: #7A4FD0; border-radius: 2px"></span>02 Čistou přírodou</span>
+    <span style="display: flex; align-items: center; gap: 10px"><span style="width: 28px; height: 4px; background: #8A5A2E; border-radius: 2px"></span>03 CoffeeBreak</span>
+    <span style="display: flex; align-items: center; gap: 10px"><span style="width: 28px; height: 4px; background: #1F5FBF; border-radius: 2px"></span>04 TableTap</span>
+  </div>
+
+  <!-- Runs -->
+  <section id="runs" style="padding: 72px 72px 0; display: flex; flex-direction: column; gap: 56px">
+    <article style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 56px; align-items: center">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <span style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase; color: #4B5B6B"><span style="width: 28px; height: 4px; background: #2E9E5B; border-radius: 2px"></span>Run 01</span>
+        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 52px; letter-spacing: -0.03em; line-height: 1">Kamtřídit</h2>
+        <p style="margin: 0; font-size: 18px; line-height: 1.6; color: #33414F">A nationwide recycling map for Czechia. I rebuilt it so 33,000+ collection points load fast: only the visible area loads, clusters split on click, and the list is virtualized.</p>
+        <div style="display: flex; gap: 22px; font-weight: 600; font-size: 15px"><a href="#case-study">Ride the case study →</a><a href="https://kamtridit.cz">kamtridit.cz ↗</a></div>
+      </div>
+      <img src="../public/images/kamtridit/clusters.webp" alt="Kamtřídit map with clustered recycling points" style="width: 100%; display: block; border-radius: 6px; border: 1px solid #C9D4E0">
+    </article>
+
+    <article style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 56px; align-items: center">
+      <img src="../public/images/work/cistou-prirodou.webp" alt="Čistou přírodou homepage" style="width: 100%; display: block; border-radius: 6px; border: 1px solid #C9D4E0">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <span style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase; color: #4B5B6B"><span style="width: 28px; height: 4px; background: #7A4FD0; border-radius: 2px"></span>Run 02</span>
+        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 52px; letter-spacing: -0.03em; line-height: 1">Čistou přírodou</h2>
+        <p style="margin: 0; font-size: 18px; line-height: 1.6; color: #33414F">A complete redesign of the national hiking and cycling guide: 73 routes, GPX ingestion and interactive waypoints. ~12,000 weekly visitors in season.</p>
+      </div>
+    </article>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; padding-top: 16px">
+      <article style="display: flex; flex-direction: column; gap: 14px">
+        <span style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; color: #4B5B6B"><span style="width: 24px; height: 4px; background: #8A5A2E; border-radius: 2px"></span>Run 03</span>
+        <img src="../public/images/work/coffeebreak.webp" alt="CoffeeBreak pipeline dashboard" style="width: 100%; display: block; border-radius: 6px; border: 1px solid #C9D4E0">
+        <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em">CoffeeBreak</h3>
+        <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #33414F">Redesigned in Figma and built, plus the new TypeScript backend.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; gap: 14px">
+        <span style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; color: #4B5B6B"><span style="width: 24px; height: 4px; background: #1F5FBF; border-radius: 2px"></span>Run 04</span>
+        <div style="background: #DCE3EB; border-radius: 6px; padding: 18px"><img src="../public/images/tabletap/manager-mock.webp" alt="TableTap admin panel on a laptop" style="width: 100%; display: block"></div>
+        <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em">TableTap</h3>
+        <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #33414F">AI menu import from a photo, admin panel, analytics and the landing site.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; gap: 14px">
+        <span style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; color: #4B5B6B"><span style="width: 24px; height: 4px; background: #0F8A8A; border-radius: 2px"></span>Run 05</span>
+        <img src="../public/images/work/bh-passport.webp" alt="BH-Passport homepage" style="width: 100%; display: block; border-radius: 6px; border: 1px solid #C9D4E0">
+        <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em">BH-Passport</h3>
+        <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #33414F">Next.js and Sanity CMS, rebuilt from WordPress. Lighthouse 97.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- About / off-piste -->
+  <section id="about" style="margin-top: 120px; padding: 72px; background: #14202B; color: #F4F6F8; display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 56px">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #9FB0C2">Off-piste</p>
+      <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 44px; letter-spacing: -0.03em; line-height: 1.05">Five years owning the whole frontend</h2>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 22px; font-size: 19px; line-height: 1.6">
+      <p style="margin: 0">I’ve spent five years as the only frontend engineer on most of my projects, so I’m used to owning everything from architecture to the last pixel. Lately that has grown into design and backend work too.</p>
+      <p style="margin: 0; color: #C3CFDB">Away from the keyboard I’m snowboarding or on a mountain bike, and at home there’s usually a game on the PS5. Also a big Attack on Titan fan.</p>
+    </div>
+  </section>
+
+  <footer id="contact" style="margin-top: auto; padding: 64px 72px 72px; display: flex; justify-content: space-between; align-items: flex-end">
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #4B5B6B">Last lift up</p>
+      <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 56px; letter-spacing: -0.03em; line-height: 1">Want to see more, or work together?</h2>
+      <a href="mailto:andjelko.cvjetkovic@gmail.com" style="font-size: 22px; font-weight: 500">andjelko.cvjetkovic@gmail.com</a>
+    </div>
+    <div id="resume" style="display: flex; gap: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">
+      <a href="https://www.linkedin.com/in/andjelkocvjetkovic/">LinkedIn</a>
+      <a href="https://github.com/andelkocvjetkovic">GitHub</a>
+      <a href="#resume">Resume</a>
+    </div>
+  </footer>
+</div>
+<script>
+  // Replays the one-time ride animation from the start.
+  function replay(e) {
+    if (e) e.preventDefault();
+    document.querySelectorAll('.tour, .lean').forEach(function (el) {
+      el.getAnimations().forEach(function (a) { a.cancel(); a.play(); });
+    });
+  }
+  // Full-screen mobile menu.
+  function openMenu(e) { if (e) e.preventDefault(); var m = document.getElementById('menu'); if (m) m.hidden = false; }
+  function closeMenu() { var m = document.getElementById('menu'); if (m) m.hidden = true; }
+</script>
+</body>
+</html>
